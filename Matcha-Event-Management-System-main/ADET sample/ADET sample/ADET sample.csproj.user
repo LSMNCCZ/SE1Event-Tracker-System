@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="EmployeeDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Custom\RB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Employees_tab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Events_Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Events_tab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Main_Page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Services_tab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
