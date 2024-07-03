@@ -10,8 +10,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\calendar btn.png" />
+    <None Remove="Resources\deletebtn.png" />
+    <None Remove="Resources\edit_button_image1.png" />
+    <None Remove="Resources\finance_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
     <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\calendar btn.png" />
+    <Resource Include="Resources\deletebtn.png" />
+    <Resource Include="Resources\finance_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

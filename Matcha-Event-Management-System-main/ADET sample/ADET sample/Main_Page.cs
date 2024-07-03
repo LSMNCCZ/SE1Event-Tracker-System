@@ -2,6 +2,7 @@ namespace ADET_sample
 {
     public partial class Main_Page : Form
     {
+        private bool EventTabActive = true;
         public Main_Page()
         {
             InitializeComponent();
@@ -25,15 +26,17 @@ namespace ADET_sample
             loadform(new Events_tab());
             DateTime today = DateTime.Today;
             Events_tab eventsTab = this.mainpanel.Tag as Events_tab;
-            eventsTab.FillEventsDataGridView(today, eventsTab.GetUpcomingEventsData());
+            eventsTab.FillEventsDataGridView(today);
         }
 
         public void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            //events for clicked day
-           DateTime selectedDate = e.Start;
-           Events_tab eventsTab = this.mainpanel.Tag as Events_tab;
-           eventsTab.FillEventsDataGridView(selectedDate, eventsTab.GetUpcomingEventsData());
+            if (EventTabActive)
+            {
+                DateTime selectedDate = e.Start;
+                Events_tab eventsTab = this.mainpanel.Tag as Events_tab;
+                eventsTab.FillEventsDataGridView(selectedDate);
+            }
         }
 
         public void mainpanel_Paint(object sender, PaintEventArgs e)
@@ -44,17 +47,29 @@ namespace ADET_sample
         private void Employee_Button_Click(object sender, EventArgs e)
         {
             loadform(new Employees_tab());
+            EventTabActive = false;
         }
 
         private void Event_Button_Click(object sender, EventArgs e)
         {
             loadform(new Events_tab());
+            EventTabActive = true;
         }
 
         private void Services_Button_Click(object sender, EventArgs e)
         {
             loadform(new Services_tab());
+            EventTabActive = false;
         }
-        
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            loadform(new Equipments_tab());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            loadform(new Finance_tab());
+        }
     }
 }

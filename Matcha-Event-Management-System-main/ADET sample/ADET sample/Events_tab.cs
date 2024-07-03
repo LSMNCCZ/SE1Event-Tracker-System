@@ -1,8 +1,5 @@
-﻿using System.Data;
-using System.IO.Packaging;
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace ADET_sample
 {
@@ -13,8 +10,7 @@ namespace ADET_sample
         {
             InitializeComponent();
             DateTime today = DateTime.Today;
-            FillEventsDataGridView(today, GetUpcomingEventsData());
-            UpcomingEventsData = new DataGridView();
+            FillEventsDataGridView(today);
         }
 
         private void AddEventButton_Click(object sender, EventArgs e)
@@ -40,7 +36,7 @@ namespace ADET_sample
             string equipments = null;
 
             Events_Info events_Info = new Events_Info(this, eventName, eventType, venue, time, clientName, eventDate,
-                    package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments);
+                    package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments, null, null);
             events_Info.Show();
         }
 
@@ -78,76 +74,55 @@ namespace ADET_sample
                 string contact = selectedRow.Cells["clientNum"].Value.ToString();
                 string request = selectedRow.Cells["additionalReq"].Value.ToString();
                 string equipments = selectedRow.Cells["equipNeeded"].Value.ToString();
+                string payID = selectedRow.Cells["paymentID"].Value.ToString();
+                string eventID = selectedRow.Cells["eventID"].Value.ToString();
 
                 Events_Info eventsInfoForm = new Events_Info(this, eventName, eventType, venue, time, clientName, eventDate,
-                    package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments);
+                    package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments, eventID, payID);
                 eventsInfoForm.Show();
             }
         }
 
-        public DataGridView GetUpcomingEventsData()
-        {
-            return UpcomingEventsData;
-        }
-
         //Filling the DataGrid View
-        public void FillEventsDataGridView(DateTime selectedDate, DataGridView upcomingEventsData)
-        {this.inititalSelectedDate = selectedDate;
-            // Create a connection using a connection string
+        public void FillEventsDataGridView(DateTime selectedDate)
+        {
             using (MySqlConnection con = DatabaseConnection.GetConnection())
             {
-                try
-                {con.Open();
-                    using (MySqlDataAdapter comm = new MySqlDataAdapter("SELECT * FROM event_management_system.event WHERE DATE_FORMAT(eventDate, '%Y/%m/%d') = @selectedDate", con))
-                    {
-                        // Add the selectedDate parameter to the command
-                        comm.SelectCommand.Parameters.AddWithValue("@selectedDate", selectedDate.ToString("yyyy/MM/dd"));
+                this.inititalSelectedDate = selectedDate;
+                con.Open();
+                MySqlDataAdapter Events = new MySqlDataAdapter("SELECT * FROM event WHERE DATE_FORMAT(eventDate, '%Y/%m/%d') = @selectedDate  ", con);
+                Events.SelectCommand.Parameters.AddWithValue("@selectedDate", selectedDate);
+                DataTable EventTable = new DataTable();
+                Events.Fill(EventTable);
+                UpcomingEventsData.DataSource = EventTable;
 
-                        // Create a DataTable to hold the data
-                        DataTable EventTable = new DataTable();
+                //static data events table
+                UpcomingEventsData.ReadOnly = true;
 
-                        // Fill the DataTable with data from the database
-                        comm.Fill(EventTable);
+                //Changing name to appear sa header
+                UpcomingEventsData.Columns["eventName"].HeaderText = "Name";
+                UpcomingEventsData.Columns["eventType"].HeaderText = "Type";
+                UpcomingEventsData.Columns["eventVenue"].HeaderText = "Venue";
+                UpcomingEventsData.Columns["eventTime"].HeaderText = "Time";
 
-                        // Check if the DataTable has any rows
-                        if (EventTable.Rows.Count > 0)
-                        {
-                            // Assign the DataTable as the data source for the DataGridView
-                            UpcomingEventsData.DataSource = EventTable;
-                            UpcomingEventsData.Columns["eventName"].HeaderText = "Name";
-                            UpcomingEventsData.Columns["eventType"].HeaderText = "Type";
-                            UpcomingEventsData.Columns["eventVenue"].HeaderText = "Venue";
-                            UpcomingEventsData.Columns["eventTime"].HeaderText = "Time";
 
-                            // Hide columns not needed for display
-                            UpcomingEventsData.Columns["eventID"].Visible = false;
-                            UpcomingEventsData.Columns["paymentID"].Visible = false;
-                            UpcomingEventsData.Columns["equipNeeded"].Visible = false;
-                            UpcomingEventsData.Columns["clientName"].Visible = false;
-                            UpcomingEventsData.Columns["eventDate"].Visible = false;
-                            UpcomingEventsData.Columns["packageType"].Visible = false;
-                            UpcomingEventsData.Columns["addOn"].Visible = false;
-                            UpcomingEventsData.Columns["paymentStatus"].Visible = false;
-                            UpcomingEventsData.Columns["staff1"].Visible = false;
-                            UpcomingEventsData.Columns["staff2"].Visible = false;
-                            UpcomingEventsData.Columns["staff3"].Visible = false;
-                            UpcomingEventsData.Columns["staff4"].Visible = false;
-                            UpcomingEventsData.Columns["additionalReq"].Visible = false;
-                            UpcomingEventsData.Columns["clientNum"].Visible = false;
-                        }
-                        else
-                        {
-                            // Optionally handle the case where no data is available
-                            MessageBox.Show("No events found for the selected date.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Handle any errors that occurred during database access
-                    MessageBox.Show("An error occurred while retrieving data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                // Hide columns na di pa need sa display
+                UpcomingEventsData.Columns["eventID"].Visible = false;
+                UpcomingEventsData.Columns["paymentID"].Visible = false;
+                UpcomingEventsData.Columns["equipNeeded"].Visible = false;
+                UpcomingEventsData.Columns["clientName"].Visible = false;
+                UpcomingEventsData.Columns["eventDate"].Visible = false;
+                UpcomingEventsData.Columns["packageType"].Visible = false;
+                UpcomingEventsData.Columns["addOn"].Visible = false;
+                UpcomingEventsData.Columns["paymentStatus"].Visible = false;
+                UpcomingEventsData.Columns["staff1"].Visible = false;
+                UpcomingEventsData.Columns["staff2"].Visible = false;
+                UpcomingEventsData.Columns["staff3"].Visible = false;
+                UpcomingEventsData.Columns["staff4"].Visible = false;
+                UpcomingEventsData.Columns["additionalReq"].Visible = false;
+                UpcomingEventsData.Columns["clientNum"].Visible = false;
             }
         }
     }
 }
+

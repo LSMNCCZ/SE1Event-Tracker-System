@@ -26,10 +26,10 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private DataGridView UpcomingEventsData = new DataGridView();
+        
         private void InitializeComponent()
         {
-            DataGridView UpcomingEventsData;
+            //start
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             UpcomingEventsLabel = new Label();
@@ -137,5 +137,6 @@
 
         private Label UpcomingEventsLabel;
         private ADETADET_sample.RBButton AddEventButton;
+        private DataGridView UpcomingEventsData = new DataGridView();
     }
 }

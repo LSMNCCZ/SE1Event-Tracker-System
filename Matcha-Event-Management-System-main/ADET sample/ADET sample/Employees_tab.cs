@@ -1,22 +1,20 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
 using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace ADET_sample
 {
     public partial class Employees_tab : Form
     {
+
         public Employees_tab()
         {
             InitializeComponent();
             FILL_EMP_LIST();
+            EmployeeListDataGrid.ReadOnly = true;
         }
 
         private void Employees_tab_Load(object sender, EventArgs e)
         {
-            // Additional load operations can be placed here if needed
         }
 
         public void FILL_EMP_LIST()

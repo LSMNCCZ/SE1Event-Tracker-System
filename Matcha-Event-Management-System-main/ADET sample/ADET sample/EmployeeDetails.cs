@@ -1,19 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using MySql.Data.MySqlClient;
 
 namespace ADET_sample
 {
@@ -29,7 +14,7 @@ namespace ADET_sample
         private string initialempRole;
         private string initialPassword;
         public EmployeeDetails(Employees_tab parentForm, string empID, string empName, string empEmail,
-            string empNum, string empAdd, string empFB, string empRole,string password)
+            string empNum, string empAdd, string empFB, string empRole, string password)
         {
             InitializeComponent();
             // Store the initial values of the text boxes and comboboxes para accessible sa lahut
@@ -54,7 +39,6 @@ namespace ADET_sample
                 UNEmpFBName.Visible = true;
                 UNEmpID.Visible = true;
                 UNEmpName.Visible = true;
-                UNempRole.Visible = true;
                 UNEmpNum.Visible = true;
                 PasswordLabel.Visible = true;
                 PasswordTB.Visible = true;
@@ -67,7 +51,7 @@ namespace ADET_sample
                 EmpIDTB.ReadOnly = false;
                 EmpNumTB.ReadOnly = false;
                 EmpRoleTB.Enabled = true;
-                
+
 
             }
             else //for displaying and editing employee 
@@ -77,7 +61,6 @@ namespace ADET_sample
                 UNEmpFBName.Visible = false;
                 UNEmpID.Visible = false;
                 UNEmpName.Visible = false;
-                UNempRole.Visible = false;
                 UNEmpNum.Visible = false;
                 UNPassword.Visible = false;
                 EmpRoleTB.Enabled = false;
@@ -90,7 +73,7 @@ namespace ADET_sample
                 EmpAddTB.Text = empAdd;
                 EmpRoleTB.Text = empRole;
 
-                
+
             }
 
         }
@@ -116,7 +99,7 @@ namespace ADET_sample
             //Removing Employee
             else if (Remove_EmployeeBTN.Text == "Remove")
             {
-                if (MessageBox.Show("Do you want to Remove?", "Remove Employee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Do you want to Remove Employee?", "Remove Employee", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (MySqlConnection con = DatabaseConnection.GetConnection())
                     {
@@ -156,14 +139,13 @@ namespace ADET_sample
             UNEmpFBName.Visible = true;
             UNEmpName.Visible = true;
             UNEmpNum.Visible = true;
-            UNempRole.Visible = true;
 
             //Save Changes to existing employee
             if (Edit_EmployeeInfo.Text == "Save")
             {
                 if (MessageBox.Show("Do you want to save changes?", "Save Changes", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    
+
                     string empName = EmpNameTB.Text;
                     string empEmail = EmpEmailTB.Text;
                     string empNum = EmpNumTB.Text;
@@ -191,8 +173,6 @@ namespace ADET_sample
                     UNEmpFBName.Visible = false;
                     UNEmpName.Visible = false;
                     UNEmpNum.Visible = false;
-                    UNempRole.Visible = false;
-                    this.Close();
                 }
                 else
                 {
@@ -206,7 +186,7 @@ namespace ADET_sample
                 }
             }
             //Saving New employees
-            else if(Edit_EmployeeInfo.Text == "Save New Employee")
+            else if (Edit_EmployeeInfo.Text == "Save New Employee")
             {
                 if (MessageBox.Show("Do you want to save New Employee?", "Add Employee ", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -237,7 +217,6 @@ namespace ADET_sample
                     UNEmpFBName.Visible = false;
                     UNEmpName.Visible = false;
                     UNEmpNum.Visible = false;
-                    UNempRole.Visible = false;
                     //clear button disabled
                     Remove_EmployeeBTN.Enabled = false;
                 }
@@ -299,7 +278,7 @@ namespace ADET_sample
                 }
                 parentForm.RefreshEmployeeList();
             }
-            
+
         }
     }
 }

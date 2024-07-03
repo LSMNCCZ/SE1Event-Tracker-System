@@ -35,11 +35,9 @@
             EmpID_Label = new Label();
             EmployeeDetail = new Label();
             EmployeePanel = new Panel();
-            UNPassword = new TextBox();
             PasswordTB = new TextBox();
             PasswordLabel = new Label();
             EmpRoleTB = new ComboBox();
-            UNempRole = new TextBox();
             empRoleLabel = new Label();
             EmpFBTB = new TextBox();
             EmpAddTB = new TextBox();
@@ -56,6 +54,7 @@
             EmpFBName = new Label();
             EmpAddressLabel = new Label();
             EmpEmailLabel = new Label();
+            UNPassword = new TextBox();
             ExitButton = new ADETADET_sample.RBButton();
             EmployeePanel.SuspendLayout();
             SuspendLayout();
@@ -68,10 +67,10 @@
             UNEmpName.Location = new Point(92, 14);
             UNEmpName.Margin = new Padding(2, 3, 2, 3);
             UNEmpName.Name = "UNEmpName";
+            UNEmpName.ReadOnly = true;
             UNEmpName.Size = new Size(355, 32);
             UNEmpName.TabIndex = 40;
             UNEmpName.Text = "__________________________________________";
-            UNEmpName.ReadOnly = true;
             // 
             // UNEmpID
             // 
@@ -81,10 +80,10 @@
             UNEmpID.Location = new Point(630, 14);
             UNEmpID.Margin = new Padding(2, 3, 2, 3);
             UNEmpID.Name = "UNEmpID";
+            UNEmpID.ReadOnly = true;
             UNEmpID.Size = new Size(162, 32);
             UNEmpID.TabIndex = 39;
             UNEmpID.Text = "____________________________";
-            UNEmpID.ReadOnly = true;
             // 
             // EmpContactNumLabel
             // 
@@ -123,7 +122,7 @@
             // 
             EmployeeDetail.AutoSize = true;
             EmployeeDetail.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            EmployeeDetail.Location = new Point(15, 8);
+            EmployeeDetail.Location = new Point(2, 5);
             EmployeeDetail.Margin = new Padding(4, 0, 4, 0);
             EmployeeDetail.Name = "EmployeeDetail";
             EmployeeDetail.Size = new Size(263, 45);
@@ -136,7 +135,6 @@
             EmployeePanel.Controls.Add(PasswordTB);
             EmployeePanel.Controls.Add(PasswordLabel);
             EmployeePanel.Controls.Add(EmpRoleTB);
-            EmployeePanel.Controls.Add(UNempRole);
             EmployeePanel.Controls.Add(empRoleLabel);
             EmployeePanel.Controls.Add(EmpFBTB);
             EmployeePanel.Controls.Add(EmpAddTB);
@@ -163,19 +161,6 @@
             EmployeePanel.Name = "EmployeePanel";
             EmployeePanel.Size = new Size(810, 328);
             EmployeePanel.TabIndex = 45;
-            // 
-            // UNPassword
-            // 
-            UNPassword.BackColor = Color.FromArgb(223, 232, 215);
-            UNPassword.BorderStyle = BorderStyle.None;
-            UNPassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            UNPassword.Location = new Point(573, 205);
-            UNPassword.Margin = new Padding(2, 3, 2, 3);
-            UNPassword.Name = "UNPassword";
-            UNPassword.Size = new Size(219, 32);
-            UNPassword.TabIndex = 72;
-            UNPassword.Text = "____________________________";
-            UNPassword.ReadOnly = true;
             // 
             // PasswordTB
             // 
@@ -216,19 +201,6 @@
             EmpRoleTB.Sorted = true;
             EmpRoleTB.TabIndex = 69;
             EmpRoleTB.SelectedIndexChanged += EmpRoleTB_SelectedIndexChanged;
-            // 
-            // UNempRole
-            // 
-            UNempRole.BackColor = Color.FromArgb(223, 232, 215);
-            UNempRole.BorderStyle = BorderStyle.None;
-            UNempRole.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            UNempRole.Location = new Point(609, 143);
-            UNempRole.Margin = new Padding(2, 3, 2, 3);
-            UNempRole.Name = "UNempRole";
-            UNempRole.Size = new Size(183, 32);
-            UNempRole.TabIndex = 68;
-            UNempRole.Text = "____________________________";
-            UNempRole.ReadOnly = true;
             // 
             // empRoleLabel
             // 
@@ -321,10 +293,10 @@
             UNEmpAdd.Location = new Point(14, 240);
             UNEmpAdd.Margin = new Padding(2, 3, 2, 3);
             UNEmpAdd.Name = "UNEmpAdd";
+            UNEmpAdd.ReadOnly = true;
             UNEmpAdd.Size = new Size(778, 32);
             UNEmpAdd.TabIndex = 60;
             UNEmpAdd.Text = "____________________________________________________________________________________________________________";
-            UNEmpAdd.ReadOnly = true;
             // 
             // UNEmpEmail
             // 
@@ -334,10 +306,10 @@
             UNEmpEmail.Location = new Point(92, 143);
             UNEmpEmail.Margin = new Padding(2, 3, 2, 3);
             UNEmpEmail.Name = "UNEmpEmail";
+            UNEmpEmail.ReadOnly = true;
             UNEmpEmail.Size = new Size(355, 32);
             UNEmpEmail.TabIndex = 59;
             UNEmpEmail.Text = "__________________________________________";
-            UNEmpEmail.ReadOnly = true;
             // 
             // UNEmpFBName
             // 
@@ -347,10 +319,10 @@
             UNEmpFBName.Location = new Point(121, 77);
             UNEmpFBName.Margin = new Padding(2, 3, 2, 3);
             UNEmpFBName.Name = "UNEmpFBName";
+            UNEmpFBName.ReadOnly = true;
             UNEmpFBName.Size = new Size(326, 32);
             UNEmpFBName.TabIndex = 58;
             UNEmpFBName.Text = "__________________________________________";
-            UNEmpFBName.ReadOnly = true;
             // 
             // UNEmpNum
             // 
@@ -360,10 +332,10 @@
             UNEmpNum.Location = new Point(616, 77);
             UNEmpNum.Margin = new Padding(2, 3, 2, 3);
             UNEmpNum.Name = "UNEmpNum";
+            UNEmpNum.ReadOnly = true;
             UNEmpNum.Size = new Size(176, 32);
             UNEmpNum.TabIndex = 57;
             UNEmpNum.Text = "____________________________";
-            UNEmpNum.ReadOnly = true;
             // 
             // Remove_EmployeeBTN
             // 
@@ -438,6 +410,19 @@
             EmpEmailLabel.TabIndex = 52;
             EmpEmailLabel.Text = "E-mail:";
             // 
+            // UNPassword
+            // 
+            UNPassword.BackColor = Color.FromArgb(223, 232, 215);
+            UNPassword.BorderStyle = BorderStyle.None;
+            UNPassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            UNPassword.Location = new Point(573, 205);
+            UNPassword.Margin = new Padding(2, 3, 2, 3);
+            UNPassword.Name = "UNPassword";
+            UNPassword.ReadOnly = true;
+            UNPassword.Size = new Size(219, 32);
+            UNPassword.TabIndex = 72;
+            UNPassword.Text = "____________________________";
+            // 
             // ExitButton
             // 
             ExitButton.BackColor = Color.FromArgb(46, 60, 24);
@@ -500,7 +485,6 @@
         private TextBox EmpEmailTB;
         private TextBox EmpNumTB;
         private TextBox EmpFBTB;
-        private TextBox UNempRole;
         private Label empRoleLabel;
         private ComboBox EmpRoleTB;
         private TextBox UNPassword;

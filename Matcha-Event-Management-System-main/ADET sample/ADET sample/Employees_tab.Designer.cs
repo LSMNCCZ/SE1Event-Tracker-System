@@ -27,17 +27,39 @@
         /// the contents of this method with the code editor.
         /// </summary>
 
-        private DataGridView EmployeeListDataGrid;
+
         private void InitializeComponent()
         {
-            DataGridView EmployeeListDataGrid;
+            //start
+            //DataGridView EmployeeListDataGrid;
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            label1 = new Label();
             Add_New_Emp_Btn = new ADETADET_sample.RBButton();
+            label1 = new Label();
             EmployeeListDataGrid = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)EmployeeListDataGrid).BeginInit();
             SuspendLayout();
+            // 
+            // Add_New_Emp_Btn
+            // 
+            Add_New_Emp_Btn.BackColor = Color.FromArgb(46, 60, 24);
+            Add_New_Emp_Btn.BackgroundColor = Color.FromArgb(46, 60, 24);
+            Add_New_Emp_Btn.BorderColor = Color.PaleVioletRed;
+            Add_New_Emp_Btn.BorderRadius = 8;
+            Add_New_Emp_Btn.BorderSize = 0;
+            Add_New_Emp_Btn.FlatAppearance.BorderSize = 0;
+            Add_New_Emp_Btn.FlatStyle = FlatStyle.Flat;
+            Add_New_Emp_Btn.ForeColor = Color.White;
+            Add_New_Emp_Btn.ImageAlign = ContentAlignment.BottomCenter;
+            Add_New_Emp_Btn.Location = new Point(4, 763);
+            Add_New_Emp_Btn.Margin = new Padding(2, 3, 2, 3);
+            Add_New_Emp_Btn.Name = "Add_New_Emp_Btn";
+            Add_New_Emp_Btn.Size = new Size(1210, 39);
+            Add_New_Emp_Btn.TabIndex = 10;
+            Add_New_Emp_Btn.Text = "New Employee";
+            Add_New_Emp_Btn.TextColor = Color.White;
+            Add_New_Emp_Btn.UseVisualStyleBackColor = false;
+            Add_New_Emp_Btn.Click += Add_New_Emp_Btn_Click;
             // 
             // EmployeeListDataGrid
             // 
@@ -80,7 +102,7 @@
             EmployeeListDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             EmployeeListDataGrid.ShowEditingIcon = false;
             EmployeeListDataGrid.Size = new Size(1210, 696);
-            EmployeeListDataGrid.TabIndex = 11;
+            EmployeeListDataGrid.TabIndex = 10;
             EmployeeListDataGrid.CellContentClick += EmployeeListDataGrid_CellContentClick;
             // 
             // label1
@@ -93,27 +115,6 @@
             label1.Size = new Size(271, 43);
             label1.TabIndex = 0;
             label1.Text = "Employee List";
-            // 
-            // Add_New_Emp_Btn
-            // 
-            Add_New_Emp_Btn.BackColor = Color.FromArgb(46, 60, 24);
-            Add_New_Emp_Btn.BackgroundColor = Color.FromArgb(46, 60, 24);
-            Add_New_Emp_Btn.BorderColor = Color.PaleVioletRed;
-            Add_New_Emp_Btn.BorderRadius = 8;
-            Add_New_Emp_Btn.BorderSize = 0;
-            Add_New_Emp_Btn.FlatAppearance.BorderSize = 0;
-            Add_New_Emp_Btn.FlatStyle = FlatStyle.Flat;
-            Add_New_Emp_Btn.ForeColor = Color.White;
-            Add_New_Emp_Btn.ImageAlign = ContentAlignment.BottomCenter;
-            Add_New_Emp_Btn.Location = new Point(4, 763);
-            Add_New_Emp_Btn.Margin = new Padding(2, 3, 2, 3);
-            Add_New_Emp_Btn.Name = "Add_New_Emp_Btn";
-            Add_New_Emp_Btn.Size = new Size(1210, 39);
-            Add_New_Emp_Btn.TabIndex = 10;
-            Add_New_Emp_Btn.Text = "New Employee";
-            Add_New_Emp_Btn.TextColor = Color.White;
-            Add_New_Emp_Btn.UseVisualStyleBackColor = false;
-            Add_New_Emp_Btn.Click += Add_New_Emp_Btn_Click;
             // 
             // Employees_tab
             // 
@@ -135,7 +136,8 @@
         }
 
         #endregion
-        private Label label1;
         private ADETADET_sample.RBButton Add_New_Emp_Btn;
+        private DataGridView EmployeeListDataGrid;
+        private Label label1;
     }
 }

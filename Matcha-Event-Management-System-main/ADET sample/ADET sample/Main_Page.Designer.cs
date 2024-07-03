@@ -33,6 +33,8 @@ namespace ADET_sample
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Page));
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             panel1 = new Panel();
+            button2 = new Button();
+            EquipmentTab = new Button();
             Services_Button = new Button();
             Employee_Button = new Button();
             panel2 = new Panel();
@@ -40,7 +42,6 @@ namespace ADET_sample
             Event_Button = new Button();
             imageList1 = new ImageList(components);
             mainpanel = new Panel();
-            button1 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -48,7 +49,8 @@ namespace ADET_sample
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(46, 60, 24);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(EquipmentTab);
             panel1.Controls.Add(Services_Button);
             panel1.Controls.Add(Employee_Button);
             panel1.Controls.Add(panel2);
@@ -58,6 +60,46 @@ namespace ADET_sample
             panel1.Name = "panel1";
             panel1.Size = new Size(318, 814);
             panel1.TabIndex = 1;
+            // 
+            // button2
+            // 
+            button2.BackgroundImageLayout = ImageLayout.Zoom;
+            button2.FlatAppearance.BorderColor = SystemColors.ButtonHighlight;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Tahoma", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(4, 614);
+            button2.Margin = new Padding(2, 3, 2, 3);
+            button2.Name = "button2";
+            button2.Padding = new Padding(20, 0, 0, 0);
+            button2.Size = new Size(315, 84);
+            button2.TabIndex = 6;
+            button2.Text = "  Finance";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // EquipmentTab
+            // 
+            EquipmentTab.BackgroundImageLayout = ImageLayout.Zoom;
+            EquipmentTab.FlatAppearance.BorderColor = SystemColors.ButtonHighlight;
+            EquipmentTab.FlatAppearance.BorderSize = 0;
+            EquipmentTab.FlatStyle = FlatStyle.Flat;
+            EquipmentTab.Font = new Font("Tahoma", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EquipmentTab.ForeColor = Color.White;
+            EquipmentTab.Image = (Image)resources.GetObject("EquipmentTab.Image");
+            EquipmentTab.ImageAlign = ContentAlignment.MiddleLeft;
+            EquipmentTab.Location = new Point(6, 524);
+            EquipmentTab.Margin = new Padding(2, 3, 2, 3);
+            EquipmentTab.Name = "EquipmentTab";
+            EquipmentTab.Padding = new Padding(20, 0, 0, 0);
+            EquipmentTab.Size = new Size(312, 84);
+            EquipmentTab.TabIndex = 5;
+            EquipmentTab.Text = "         Equipments";
+            EquipmentTab.UseVisualStyleBackColor = true;
+            EquipmentTab.Click += button1_Click;
             // 
             // Services_Button
             // 
@@ -73,7 +115,7 @@ namespace ADET_sample
             Services_Button.Margin = new Padding(2, 3, 2, 3);
             Services_Button.Name = "Services_Button";
             Services_Button.Padding = new Padding(20, 0, 0, 0);
-            Services_Button.Size = new Size(314, 84);
+            Services_Button.Size = new Size(312, 84);
             Services_Button.TabIndex = 4;
             Services_Button.Text = "    Services";
             Services_Button.UseVisualStyleBackColor = true;
@@ -95,7 +137,7 @@ namespace ADET_sample
             Employee_Button.Padding = new Padding(20, 0, 0, 0);
             Employee_Button.Size = new Size(314, 84);
             Employee_Button.TabIndex = 3;
-            Employee_Button.Text = "    Employee";
+            Employee_Button.Text = "       Employees";
             Employee_Button.UseVisualStyleBackColor = true;
             Employee_Button.Click += Employee_Button_Click;
             // 
@@ -135,9 +177,9 @@ namespace ADET_sample
             Event_Button.Margin = new Padding(2, 3, 2, 3);
             Event_Button.Name = "Event_Button";
             Event_Button.Padding = new Padding(20, 0, 0, 0);
-            Event_Button.Size = new Size(311, 84);
+            Event_Button.Size = new Size(310, 84);
             Event_Button.TabIndex = 2;
-            Event_Button.Text = "    Events";
+            Event_Button.Text = "Events";
             Event_Button.UseVisualStyleBackColor = true;
             Event_Button.Click += Event_Button_Click;
             // 
@@ -150,30 +192,11 @@ namespace ADET_sample
             // mainpanel
             // 
             mainpanel.Location = new Point(318, 1);
-            mainpanel.Margin = new Padding(4, 4, 4, 4);
+            mainpanel.Margin = new Padding(4);
             mainpanel.Name = "mainpanel";
             mainpanel.Size = new Size(1226, 808);
             mainpanel.TabIndex = 10;
             mainpanel.Paint += mainpanel_Paint;
-            // 
-            // button1
-            // 
-            button1.BackgroundImageLayout = ImageLayout.Zoom;
-            button1.FlatAppearance.BorderColor = SystemColors.ButtonHighlight;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Tahoma", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(4, 524);
-            button1.Margin = new Padding(2, 3, 2, 3);
-            button1.Name = "button1";
-            button1.Padding = new Padding(20, 0, 0, 0);
-            button1.Size = new Size(314, 84);
-            button1.TabIndex = 5;
-            button1.Text = "    Finance";
-            button1.UseVisualStyleBackColor = true;
             // 
             // Main_Page
             // 
@@ -207,6 +230,7 @@ namespace ADET_sample
         private MonthCalendar monthCalendar1;
         public MonthCalendar DatePicker;
         private Panel mainpanel;
-        private Button button1;
+        private Button EquipmentTab;
+        private Button button2;
     }
 }

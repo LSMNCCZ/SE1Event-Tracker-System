@@ -1,7 +1,10 @@
 ﻿
+using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Globalization;
-using System.Windows.Input;
+using System.IO.Packaging;
+using System.Reflection;
 
 namespace ADET_sample
 {
@@ -30,10 +33,18 @@ namespace ADET_sample
         private string initialHour;
         private string initialMin;
         private string initialdayTime;
+        private string initialpType;
+        private string initialpAmount;
+        private string initialpDP;
+        private string eventID;
+        private string payID;
+        private string balance;
+        private Dictionary<string, int> packagePrices;
+        private Dictionary<string, int> addOnPrices;
 
         public Events_Info(Events_tab eventsTab, string eventName, string eventType, string venue, string time, string clientName,
             string eventDate, string package, string addOns, string paymentStatus, string staff1, string staff2,
-            string staff3, string staff4, string contact, string request, string equipments)
+            string staff3, string staff4, string contact, string request, string equipments, string eventID, string payID/*,string balance*/)
         {
             InitializeComponent();
             // Store the initial values of the text boxes and comboboxes para accessible sa lahut
@@ -55,6 +66,12 @@ namespace ADET_sample
             this.initialStaff3 = staff3;
             this.initialStaff4 = staff3;
             this.initialEquipments = equipments;
+            this.payID = payID;
+            this.eventID = eventID;
+
+            this.packagePrices = new Dictionary<string, int>();
+            this.addOnPrices = new Dictionary<string, int>();
+
 
             //convert 24hours time format into 12
             var timeParts = time.Split(':');
@@ -76,7 +93,7 @@ namespace ADET_sample
             this.initialHour = hourStr;
             this.initialMin = minStr;
             //
-            //CONNECTING TO DB FOR DROP DOWN OPTIONS
+            //CONNECTING TO DB FOR DROP DOWN OPTIONS and getting balance
             using (MySqlConnection con = DatabaseConnection.GetConnection())
             {
                 con.Open();
@@ -114,7 +131,48 @@ namespace ADET_sample
                         Staff4DB.Items.Add(staffOP);
                     }
                 }
+                //getting balance
+                MySqlCommand clientbalance = new MySqlCommand("SELECT * FROM event_management_system.invoice WHERE paymentID = @pID AND eventID = @eID;", con);
+                clientbalance.Parameters.AddWithValue("@eID", this.eventID);
+                clientbalance.Parameters.AddWithValue("@pID", this.payID);
 
+                using (MySqlDataReader balancereader = clientbalance.ExecuteReader())
+                {
+                    if (balancereader.Read())  // Check if there are rows to read
+                    {
+                        this.balance = balancereader["paymentBal"].ToString();
+                        this.initialpType = balancereader["paymentType"].ToString();
+                        this.initialpAmount = balancereader["totalAmount"].ToString();
+                        this.initialpDP = balancereader["downpayment"].ToString();
+
+
+                    }
+                }
+
+
+               //getting prices
+                MySqlCommand packageCommand = new MySqlCommand("SELECT packageType, packagePrice FROM event_management_system.package", con);
+                using (MySqlDataReader packageReader = packageCommand.ExecuteReader())
+                {
+                    while (packageReader.Read())
+                    {
+                        string pType = packageReader.GetString("packageType");
+                        int pPrice = packageReader.GetInt32("packagePrice");
+                        this.packagePrices.Add(pType, pPrice);
+                    }
+                }
+
+                // Fetch all add-ons and their prices
+                MySqlCommand addOnCommand = new MySqlCommand("SELECT addOnID, addOnPrice FROM event_management_system.addon", con);
+                using (MySqlDataReader addOnReader = addOnCommand.ExecuteReader())
+                {
+                    while (addOnReader.Read())
+                    {
+                        string AOID= addOnReader.GetString("addOnID");
+                        int AOPrice = addOnReader.GetInt32("addOnPrice");
+                        this.addOnPrices.Add(AOID, AOPrice);
+                    }
+                }
             }
 
 
@@ -124,6 +182,8 @@ namespace ADET_sample
                 Edit_EventInfo.Text = "Add Event";
                 Delete_EventInfo.Text = "Clear";
                 ExitButton.Text = "Done";
+                Down_BalLabel.Text = "Down Payment";
+
 
                 EventNameTB.Visible = true;
                 EventTypeTB.Visible = true;
@@ -170,10 +230,16 @@ namespace ADET_sample
                 UnderlinedVenue.Visible = true;
                 UnderlineEventName.Visible = true;
                 UnderlineEventType.Visible = true;
+                UNDownPayment.Visible = true;  
 
             }
             else//for displaying selected date event and editing event details.
             {
+                MODlabel.Visible = false;
+                MODCB.Visible = false;
+                Down_BalLabel.Text = "Balance";
+                DownPaymentTB.Text = this.balance;
+                DownPaymentTB.ReadOnly = true;
                 EventNameTB.Visible = false;
                 EventTypeTB.Visible = false;
                 EventNameLabel.Text = eventName + " - " + eventType;
@@ -220,6 +286,7 @@ namespace ADET_sample
                 UnderlinedVenue.Visible = false;
                 UnderlineEventName.Visible = false;
                 UnderlineEventType.Visible = false;
+                UNDownPayment.Visible = false; 
 
                 PickDateBT.Visible = false;
 
@@ -412,6 +479,8 @@ namespace ADET_sample
             ContactTB.ReadOnly = false;
             RequestTB.ReadOnly = false;
 
+
+
             // Make the combo boxes editable
             HourCB.Enabled = true;
             MinCB.Enabled = true;
@@ -443,18 +512,22 @@ namespace ADET_sample
 
             if (Edit_EventInfo.Text == "Save")
             {
+
+                DownPaymentTB.ReadOnly = false;
+                UNDownPayment.Visible = true;
                 if (MessageBox.Show("Do you want to save changes?", "Save Changes", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     string eventName = this.initialEventName;
                     string eventType = this.initialEventType;
                     string venue = VenueTB.Text;
-                    
+
                     string clientName = ClientTB.Text;
                     string eventDate = DateTB.Text;
                     string contact = ContactTB.Text;
                     string request = RequestTB.Text;
                     string package = PackageDB.SelectedItem.ToString();
                     string paymentStatus = PaymentStatusDB.SelectedItem.ToString();
+                    
 
                     string staff1 = (Staff1DB.SelectedItem == null || Staff1DB.SelectedItem == "" || Staff1DB.SelectedItem == "None") ? "" : Staff1DB.SelectedItem.ToString();
                     string staff2 = (Staff2DB.SelectedItem == null || Staff2DB.SelectedItem == "" || Staff2DB.SelectedItem == "None") ? "" : Staff2DB.SelectedItem.ToString();
@@ -464,12 +537,13 @@ namespace ADET_sample
                     string addOns = AddOnsDB.SelectedItem.ToString();
                     string equipments = EquipmentsTB.Text;
 
+
                     //Time
                     string hh = HourCB.Text;
                     string mm = MinCB.Text;
-                    if(AMPMCB.Text == "PM")
+                    if (AMPMCB.Text == "PM")
                     {
-                        int  hour = int.Parse(hh);
+                        int hour = int.Parse(hh);
                         hour = hour + 12;
                         hh = hour.ToString();
                     }
@@ -477,9 +551,25 @@ namespace ADET_sample
                     string time = concatTime;
 
 
-                    UpdatingEventDataBase(eventName, eventType, venue, time, clientName, eventDate,
-                            package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments);
+                    string pbalance;
+                    if (paymentStatus == "FULL")
+                    {
+                        pbalance = "0";
+                    }
+                    else
+                    {
+                        pbalance = this.balance;
+                    }
 
+                    
+
+                    UpdatingEventDataBase(eventName, eventType, venue, time, clientName, eventDate,
+                            package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments,this.eventID, this.payID);
+
+                    UpdateInvoice(this.eventID, this.payID, paymentStatus, this.initialpAmount, pbalance, this.initialpDP, this.initialpType);
+
+                    Invoice Invoice = new Invoice(this.eventID, this.payID);
+                    Invoice.Show();
 
                     //Making All Text Box initially display values according to Database's record
                     VenueTB.ReadOnly = true;
@@ -582,13 +672,15 @@ namespace ADET_sample
             }
             else if (Edit_EventInfo.Text == "Add Event")
             {
+
                 Delete_EventInfo.Enabled = true;
                 if (MessageBox.Show("Do you want to add event?", "Add Event", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    
                     string eventName = EventNameTB.Text;
                     string eventType = EventTypeTB.Text;
                     string venue = VenueTB.Text;
-                    
+
                     string clientName = ClientTB.Text;
                     string eventDate = DateTB.Text;
                     string contact = ContactTB.Text;
@@ -604,6 +696,8 @@ namespace ADET_sample
                     string addOns = (AddOnsDB.SelectedItem == null || AddOnsDB.SelectedItem == "" || AddOnsDB.SelectedItem == "None") ? "" : AddOnsDB.SelectedItem.ToString();
                     string equipments = EquipmentsTB.Text;
 
+                    string paymentType = MODCB.SelectedItem.ToString();
+
                     //Time
                     string hh = HourCB.Text;
                     string mm = MinCB.Text;
@@ -616,8 +710,51 @@ namespace ADET_sample
                     string concatTime = hh + ":" + mm + ":" + "00";
                     string time = concatTime;
 
+                    //Generate payment ID and eventID 
+                    string flEName = eventName.Substring(0, 1);
+                    string flEType = eventType.Substring(0, 1);
+                    string day = eventDate.Substring(8, 2);
+                    string month = eventDate.Substring(5, 2);
+                    string year = eventDate.Substring(2, 2);
+                    string eID = flEName + flEType + day + month + year;
+                    string pID = flEType + flEName + month + year;
+
+
+                    //add addonprice and packageprice for totalAmount
+                    int inttotalAmount = 0;
+                    inttotalAmount = inttotalAmount + this.packagePrices[package];
+                    inttotalAmount = inttotalAmount + this.addOnPrices[addOns];
+
+                    string downpayment = DownPaymentTB.Text;
+                    int dp = Convert.ToInt32(downpayment);
+                    
+                    int intbalance = inttotalAmount - dp;
+
+                    string totalAmount = Convert.ToString(inttotalAmount);
+
+                    string pbalance;
+                    if (paymentStatus == "FULL")
+                    {
+                        pbalance = "0";
+                    }
+                    else
+                    {
+                        pbalance = Convert.ToString(intbalance);
+                    }
+
+
+
+
+
+
                     UpdatingEventDataBase(eventName, eventType, venue, time, clientName, eventDate,
-                            package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments);
+                            package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments, eID, pID);
+
+                    UpdateInvoice(eID, pID, paymentStatus, totalAmount, pbalance, downpayment, paymentType);//may prob payment type eneqweyz
+
+
+                    Invoice Invoice = new Invoice(eID, pID);
+                    Invoice.Show();
 
                     //Locking saved values from saving
                     EventNameLabel.Visible = true;
@@ -814,7 +951,7 @@ namespace ADET_sample
 
                     RequestTB.BorderStyle = BorderStyle.FixedSingle;
                     EquipmentsTB.BorderStyle = BorderStyle.FixedSingle;
-                    
+
                     PickDateBT.Visible = true;
                 }
             }
@@ -874,7 +1011,7 @@ namespace ADET_sample
 
                 RequestTB.BorderStyle = BorderStyle.FixedSingle;
                 EquipmentsTB.BorderStyle = BorderStyle.FixedSingle;
-                
+
                 PickDateBT.Visible = true;
             }
         }
@@ -919,8 +1056,8 @@ namespace ADET_sample
 
         private void UpdatingEventDataBase(string eventName, string eventType, string venue, string time, string clientName,
             string eventDate, string package, string addOns, string paymentStatus, string staff1, string staff2,
-            string staff3, string staff4, string contact, string request, string equipments)
-        {   
+            string staff3, string staff4, string contact, string request, string equipments, string eventID, string paymentID)
+        {
             using (MySqlConnection con = DatabaseConnection.GetConnection())
             {
                 con.Open();
@@ -950,6 +1087,9 @@ namespace ADET_sample
 
                     // Execute the command to update the data in the database
                     command.ExecuteNonQuery();
+
+                    Edit_EventInfo.Enabled = false;
+                    Delete_EventInfo.Enabled = false;
                 }
                 else if (Edit_EventInfo.Text == "Add Event")
                 {
@@ -958,16 +1098,6 @@ namespace ADET_sample
                         "staff3, staff4, clientNum, additionalReq, equipNeeded) VALUES (@EventID, @PaymentID, @EventName, @EventType, @Venue, @Time, " +
                         "@Client, @Date, @Package, @AddOns, @PaymentStatus, @Staff1, @Staff2, @Staff3, @Staff4, " +
                         "@Contact, @Request,@Equipments)", con);
-
-                    //Generate payment ID and eventID 
-                    string flEName = eventName.Substring(0, 1);
-                    string flEType = eventType.Substring(0, 1);
-                    string day = eventDate.Substring(8, 2);
-                    string month = eventDate.Substring(5, 2);
-                    string year = eventDate.Substring(2, 2);
-                    string eventID = flEName + flEType + day + month + year;
-                    string paymentID = flEType + flEName + month + year;
-
 
 
                     // Set the parameters for the command
@@ -993,13 +1123,67 @@ namespace ADET_sample
                     Edit_EventInfo.Enabled = false;
                     // Execute the command to update the data in the database
                     command.ExecuteNonQuery();
+
+                    Edit_EventInfo.Enabled = false;
+                    Delete_EventInfo.Enabled = false;
                 }
             }
         }
-        public void RefreshDataGridView()
+
+        private void UpdateInvoice(string eID, string payID, string paymentStatus, string totalAmount, string balance, string downpayment, string paymentType)
+        {
+            using (MySqlConnection con = DatabaseConnection.GetConnection())
+            {
+                con.Open();
+                if (Edit_EventInfo.Text == "Save") //save new paymentstatus
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE event_management_system.invoice SET paymentStatus = @pStatus, paymentBal = @pBal " +
+                        "WHERE eventID = @eID AND paymentID =@payID", con);
+                    // Set the parameters for the command
+                    command.Parameters.AddWithValue("@eID", eID);
+                    command.Parameters.AddWithValue("@payID", payID);
+                    command.Parameters.AddWithValue("@pStatus", paymentStatus);
+                    command.Parameters.AddWithValue("@pBal", balance);
+
+                    Edit_EventInfo.Enabled = false;
+                    Delete_EventInfo.Enabled = false;
+                    // Execute the command to update the data in the database
+                    command.ExecuteNonQuery();
+
+                    DownPaymentTB.Text = balance;
+                    
+                }
+                else if (Edit_EventInfo.Text == "Add Event") //new paymentID and Event
+                {
+                    MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.invoice(paymentID, eventID," +
+                        "paymentStatus, paymentType, totalAmount, paymentBal, downpayment) VALUES (@payID, @eID, @pStatus, @pType, " +
+                        "@tAmount, @pbal, @dp)", con);
+
+                    //parameters
+                    command.Parameters.AddWithValue("@eID", eID);
+                    command.Parameters.AddWithValue("@payID", payID);
+                    command.Parameters.AddWithValue("@pStatus", paymentStatus);
+                    command.Parameters.AddWithValue("@tAmount", totalAmount);
+                    command.Parameters.AddWithValue("@pType", paymentType);
+                    command.Parameters.AddWithValue("@pbal", balance);
+                    command.Parameters.AddWithValue("@dp", downpayment);
+                    
+
+                    //Make add event button unavail pag clicked once
+                    Edit_EventInfo.Enabled = false;
+                    Delete_EventInfo.Enabled = false;
+                    // Execute the command to update the data in the database
+                    command.ExecuteNonQuery();
+
+                    Edit_EventInfo.Enabled = false;
+                    Delete_EventInfo.Enabled = false;
+                }
+            }
+        }
+            public void RefreshDataGridView()
         {
             DateTime selectedDate = DateTime.ParseExact(this.initialEventDate, "yyyy-MM-dd", CultureInfo.InvariantCulture); ;
-            eventsTab.FillEventsDataGridView(selectedDate, eventsTab.GetUpcomingEventsData());
+            eventsTab.FillEventsDataGridView(selectedDate);
 
         }
 
@@ -1017,6 +1201,11 @@ namespace ADET_sample
             // Hide the calendar after clicking date
             EventInfoDatePicker.Visible = false;
 
+
+        }
+
+        private void AMPMCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

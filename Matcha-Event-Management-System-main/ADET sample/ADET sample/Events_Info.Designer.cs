@@ -34,7 +34,13 @@ namespace ADET_sample
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Events_Info));
             process1 = new System.Diagnostics.Process();
             panel3 = new Panel();
+            MODCB = new ComboBox();
             EventInfoDatePicker = new MonthCalendar();
+            MODlabel = new Label();
+            DownPaymentTB = new TextBox();
+            UNDownPayment = new TextBox();
+            Down_BalLabel = new Label();
+            PickDateBT = new ADETADET_sample.RBButton();
             MinCB = new ComboBox();
             HourCB = new ComboBox();
             AMPMCB = new ComboBox();
@@ -72,7 +78,6 @@ namespace ADET_sample
             UnderlinedVenue = new TextBox();
             UnderlineEventName = new TextBox();
             UnderlineEventType = new TextBox();
-            PickDateBT = new ADETADET_sample.RBButton();
             UnderlineDate = new TextBox();
             TimedotLabel = new Label();
             EventInfoLabel = new Label();
@@ -95,7 +100,13 @@ namespace ADET_sample
             // panel3
             // 
             panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(MODCB);
             panel3.Controls.Add(EventInfoDatePicker);
+            panel3.Controls.Add(MODlabel);
+            panel3.Controls.Add(DownPaymentTB);
+            panel3.Controls.Add(UNDownPayment);
+            panel3.Controls.Add(Down_BalLabel);
+            panel3.Controls.Add(PickDateBT);
             panel3.Controls.Add(MinCB);
             panel3.Controls.Add(HourCB);
             panel3.Controls.Add(AMPMCB);
@@ -133,7 +144,6 @@ namespace ADET_sample
             panel3.Controls.Add(UnderlinedVenue);
             panel3.Controls.Add(UnderlineEventName);
             panel3.Controls.Add(UnderlineEventType);
-            panel3.Controls.Add(PickDateBT);
             panel3.Controls.Add(UnderlineDate);
             panel3.Controls.Add(TimedotLabel);
             panel3.Location = new Point(8, 54);
@@ -143,13 +153,93 @@ namespace ADET_sample
             panel3.TabIndex = 5;
             panel3.Paint += panel3_Paint;
             // 
+            // MODCB
+            // 
+            MODCB.BackColor = Color.FromArgb(223, 232, 215);
+            MODCB.DropDownStyle = ComboBoxStyle.DropDownList;
+            MODCB.FormattingEnabled = true;
+            MODCB.Items.AddRange(new object[] { "Bank Transfer", "Cash", "G-Cash", "PayMaya" });
+            MODCB.Location = new Point(553, 327);
+            MODCB.Margin = new Padding(2, 3, 2, 3);
+            MODCB.Name = "MODCB";
+            MODCB.Size = new Size(140, 33);
+            MODCB.Sorted = true;
+            MODCB.TabIndex = 62;
+            // 
             // EventInfoDatePicker
             // 
-            EventInfoDatePicker.Location = new Point(36, 114);
+            EventInfoDatePicker.Location = new Point(471, 24);
             EventInfoDatePicker.Name = "EventInfoDatePicker";
             EventInfoDatePicker.TabIndex = 39;
             EventInfoDatePicker.Visible = false;
             EventInfoDatePicker.DateChanged += EventInfoDatePicker_DateChanged;
+            // 
+            // MODlabel
+            // 
+            MODlabel.AutoSize = true;
+            MODlabel.Location = new Point(547, 299);
+            MODlabel.Margin = new Padding(2, 0, 2, 0);
+            MODlabel.Name = "MODlabel";
+            MODlabel.Size = new Size(154, 25);
+            MODlabel.TabIndex = 59;
+            MODlabel.Text = "Mode of Payment";
+            MODlabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // DownPaymentTB
+            // 
+            DownPaymentTB.BackColor = Color.FromArgb(223, 232, 215);
+            DownPaymentTB.BorderStyle = BorderStyle.None;
+            DownPaymentTB.Location = new Point(554, 262);
+            DownPaymentTB.Margin = new Padding(2, 3, 2, 3);
+            DownPaymentTB.Name = "DownPaymentTB";
+            DownPaymentTB.Size = new Size(194, 24);
+            DownPaymentTB.TabIndex = 57;
+            // 
+            // UNDownPayment
+            // 
+            UNDownPayment.BackColor = Color.FromArgb(223, 232, 215);
+            UNDownPayment.BorderStyle = BorderStyle.None;
+            UNDownPayment.Location = new Point(554, 266);
+            UNDownPayment.Margin = new Padding(2, 3, 2, 3);
+            UNDownPayment.Name = "UNDownPayment";
+            UNDownPayment.ReadOnly = true;
+            UNDownPayment.Size = new Size(229, 24);
+            UNDownPayment.TabIndex = 58;
+            UNDownPayment.TabStop = false;
+            UNDownPayment.Text = "_____________________________";
+            // 
+            // Down_BalLabel
+            // 
+            Down_BalLabel.AutoSize = true;
+            Down_BalLabel.Location = new Point(547, 235);
+            Down_BalLabel.Margin = new Padding(2, 0, 2, 0);
+            Down_BalLabel.Name = "Down_BalLabel";
+            Down_BalLabel.Size = new Size(136, 25);
+            Down_BalLabel.TabIndex = 56;
+            Down_BalLabel.Text = "Down Payment:";
+            Down_BalLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // PickDateBT
+            // 
+            PickDateBT.BackColor = Color.FromArgb(223, 232, 215);
+            PickDateBT.BackgroundColor = Color.FromArgb(223, 232, 215);
+            PickDateBT.BackgroundImage = (Image)resources.GetObject("PickDateBT.BackgroundImage");
+            PickDateBT.BackgroundImageLayout = ImageLayout.Stretch;
+            PickDateBT.BorderColor = Color.PaleVioletRed;
+            PickDateBT.BorderRadius = 8;
+            PickDateBT.BorderSize = 0;
+            PickDateBT.FlatAppearance.BorderSize = 0;
+            PickDateBT.FlatStyle = FlatStyle.Flat;
+            PickDateBT.ForeColor = Color.Black;
+            PickDateBT.Location = new Point(740, 25);
+            PickDateBT.Margin = new Padding(2, 3, 2, 3);
+            PickDateBT.Name = "PickDateBT";
+            PickDateBT.Size = new Size(32, 33);
+            PickDateBT.TabIndex = 40;
+            PickDateBT.TextColor = Color.Black;
+            PickDateBT.UseVisualStyleBackColor = false;
+            PickDateBT.Visible = false;
+            PickDateBT.Click += PickDateBT_Click;
             // 
             // MinCB
             // 
@@ -157,7 +247,7 @@ namespace ADET_sample
             MinCB.DropDownStyle = ComboBoxStyle.DropDownList;
             MinCB.FormattingEnabled = true;
             MinCB.Items.AddRange(new object[] { "1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "3", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "4", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "5", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "6", "7", "8", "9" });
-            MinCB.Location = new Point(107, 210);
+            MinCB.Location = new Point(632, 119);
             MinCB.Margin = new Padding(2, 3, 2, 3);
             MinCB.Name = "MinCB";
             MinCB.Size = new Size(61, 33);
@@ -170,7 +260,7 @@ namespace ADET_sample
             HourCB.DropDownStyle = ComboBoxStyle.DropDownList;
             HourCB.FormattingEnabled = true;
             HourCB.Items.AddRange(new object[] { "1", "10", "11", "12", "2", "3", "4", "5", "6", "7", "8", "9" });
-            HourCB.Location = new Point(41, 210);
+            HourCB.Location = new Point(566, 119);
             HourCB.Margin = new Padding(2, 3, 2, 3);
             HourCB.Name = "HourCB";
             HourCB.Size = new Size(60, 33);
@@ -183,28 +273,29 @@ namespace ADET_sample
             AMPMCB.DropDownStyle = ComboBoxStyle.DropDownList;
             AMPMCB.FormattingEnabled = true;
             AMPMCB.Items.AddRange(new object[] { "AM", "PM" });
-            AMPMCB.Location = new Point(177, 211);
+            AMPMCB.Location = new Point(702, 119);
             AMPMCB.Margin = new Padding(2, 3, 2, 3);
             AMPMCB.Name = "AMPMCB";
             AMPMCB.Size = new Size(70, 33);
             AMPMCB.Sorted = true;
             AMPMCB.TabIndex = 52;
+            AMPMCB.SelectedIndexChanged += AMPMCB_SelectedIndexChanged;
             // 
             // EquipmentsTB
             // 
             EquipmentsTB.BackColor = Color.FromArgb(223, 232, 215);
             EquipmentsTB.BorderStyle = BorderStyle.None;
-            EquipmentsTB.Location = new Point(455, 404);
+            EquipmentsTB.Location = new Point(451, 404);
             EquipmentsTB.Margin = new Padding(2, 3, 2, 3);
             EquipmentsTB.Multiline = true;
             EquipmentsTB.Name = "EquipmentsTB";
-            EquipmentsTB.Size = new Size(336, 79);
+            EquipmentsTB.Size = new Size(305, 79);
             EquipmentsTB.TabIndex = 51;
             // 
             // EquipmentsLabel
             // 
             EquipmentsLabel.AutoSize = true;
-            EquipmentsLabel.Location = new Point(455, 376);
+            EquipmentsLabel.Location = new Point(451, 376);
             EquipmentsLabel.Margin = new Padding(2, 0, 2, 0);
             EquipmentsLabel.Name = "EquipmentsLabel";
             EquipmentsLabel.Size = new Size(173, 25);
@@ -241,7 +332,7 @@ namespace ADET_sample
             PackageDB.BackColor = Color.FromArgb(223, 232, 215);
             PackageDB.DropDownStyle = ComboBoxStyle.DropDownList;
             PackageDB.FormattingEnabled = true;
-            PackageDB.Location = new Point(301, 211);
+            PackageDB.Location = new Point(301, 196);
             PackageDB.Margin = new Padding(2, 3, 2, 3);
             PackageDB.Name = "PackageDB";
             PackageDB.Size = new Size(140, 33);
@@ -255,7 +346,7 @@ namespace ADET_sample
             Staff4DB.DropDownStyle = ComboBoxStyle.DropDownList;
             Staff4DB.FormattingEnabled = true;
             Staff4DB.Items.AddRange(new object[] { "None" });
-            Staff4DB.Location = new Point(620, 222);
+            Staff4DB.Location = new Point(34, 313);
             Staff4DB.Margin = new Padding(2, 3, 2, 3);
             Staff4DB.Name = "Staff4DB";
             Staff4DB.Size = new Size(140, 33);
@@ -269,7 +360,7 @@ namespace ADET_sample
             Staff3DB.DropDownStyle = ComboBoxStyle.DropDownList;
             Staff3DB.FormattingEnabled = true;
             Staff3DB.Items.AddRange(new object[] { "None" });
-            Staff3DB.Location = new Point(620, 189);
+            Staff3DB.Location = new Point(34, 274);
             Staff3DB.Margin = new Padding(2, 3, 2, 3);
             Staff3DB.Name = "Staff3DB";
             Staff3DB.Size = new Size(140, 33);
@@ -283,7 +374,7 @@ namespace ADET_sample
             Staff2DB.DropDownStyle = ComboBoxStyle.DropDownList;
             Staff2DB.FormattingEnabled = true;
             Staff2DB.Items.AddRange(new object[] { "None" });
-            Staff2DB.Location = new Point(620, 155);
+            Staff2DB.Location = new Point(34, 235);
             Staff2DB.Margin = new Padding(2, 3, 2, 3);
             Staff2DB.Name = "Staff2DB";
             Staff2DB.Size = new Size(140, 33);
@@ -297,7 +388,7 @@ namespace ADET_sample
             Staff1DB.DropDownStyle = ComboBoxStyle.DropDownList;
             Staff1DB.FormattingEnabled = true;
             Staff1DB.Items.AddRange(new object[] { "None" });
-            Staff1DB.Location = new Point(620, 121);
+            Staff1DB.Location = new Point(34, 196);
             Staff1DB.Margin = new Padding(2, 3, 2, 3);
             Staff1DB.Name = "Staff1DB";
             Staff1DB.Size = new Size(140, 33);
@@ -311,7 +402,7 @@ namespace ADET_sample
             AddOnsDB.DropDownStyle = ComboBoxStyle.DropDownList;
             AddOnsDB.FormattingEnabled = true;
             AddOnsDB.Items.AddRange(new object[] { "None" });
-            AddOnsDB.Location = new Point(301, 303);
+            AddOnsDB.Location = new Point(301, 262);
             AddOnsDB.Margin = new Padding(2, 3, 2, 3);
             AddOnsDB.Name = "AddOnsDB";
             AddOnsDB.Size = new Size(140, 33);
@@ -325,7 +416,7 @@ namespace ADET_sample
             PaymentStatusDB.DropDownStyle = ComboBoxStyle.DropDownList;
             PaymentStatusDB.FormattingEnabled = true;
             PaymentStatusDB.Items.AddRange(new object[] { "FULL", "PRTL" });
-            PaymentStatusDB.Location = new Point(620, 307);
+            PaymentStatusDB.Location = new Point(301, 327);
             PaymentStatusDB.Margin = new Padding(2, 3, 2, 3);
             PaymentStatusDB.Name = "PaymentStatusDB";
             PaymentStatusDB.Size = new Size(140, 33);
@@ -336,7 +427,7 @@ namespace ADET_sample
             // AddOnsLabel
             // 
             AddOnsLabel.AutoSize = true;
-            AddOnsLabel.Location = new Point(298, 278);
+            AddOnsLabel.Location = new Point(298, 235);
             AddOnsLabel.Margin = new Padding(2, 0, 2, 0);
             AddOnsLabel.Name = "AddOnsLabel";
             AddOnsLabel.Size = new Size(83, 25);
@@ -353,7 +444,7 @@ namespace ADET_sample
             RequestTB.Margin = new Padding(2, 3, 2, 3);
             RequestTB.Multiline = true;
             RequestTB.Name = "RequestTB";
-            RequestTB.Size = new Size(405, 79);
+            RequestTB.Size = new Size(393, 79);
             RequestTB.TabIndex = 0;
             RequestTB.TextChanged += RequestTB_TextChanged;
             // 
@@ -361,7 +452,7 @@ namespace ADET_sample
             // 
             VenueTB.BackColor = Color.FromArgb(223, 232, 215);
             VenueTB.BorderStyle = BorderStyle.None;
-            VenueTB.Location = new Point(39, 303);
+            VenueTB.Location = new Point(298, 124);
             VenueTB.Margin = new Padding(2, 3, 2, 3);
             VenueTB.Name = "VenueTB";
             VenueTB.Size = new Size(194, 24);
@@ -372,7 +463,7 @@ namespace ADET_sample
             // 
             ContactTB.BackColor = Color.FromArgb(223, 232, 215);
             ContactTB.BorderStyle = BorderStyle.None;
-            ContactTB.Location = new Point(306, 116);
+            ContactTB.Location = new Point(36, 124);
             ContactTB.Margin = new Padding(2, 3, 2, 3);
             ContactTB.Name = "ContactTB";
             ContactTB.Size = new Size(194, 24);
@@ -383,10 +474,10 @@ namespace ADET_sample
             // 
             DateTB.BackColor = Color.FromArgb(223, 232, 215);
             DateTB.BorderStyle = BorderStyle.None;
-            DateTB.Location = new Point(39, 116);
+            DateTB.Location = new Point(635, 30);
             DateTB.Margin = new Padding(2, 3, 2, 3);
             DateTB.Name = "DateTB";
-            DateTB.Size = new Size(185, 24);
+            DateTB.Size = new Size(101, 24);
             DateTB.TabIndex = 20;
             DateTB.TextChanged += DateTB_TextChanged;
             // 
@@ -404,7 +495,7 @@ namespace ADET_sample
             // TimeLabel
             // 
             TimeLabel.AutoSize = true;
-            TimeLabel.Location = new Point(32, 182);
+            TimeLabel.Location = new Point(563, 93);
             TimeLabel.Margin = new Padding(2, 0, 2, 0);
             TimeLabel.Name = "TimeLabel";
             TimeLabel.Size = new Size(50, 25);
@@ -428,7 +519,7 @@ namespace ADET_sample
             // PaymentStatusLabel
             // 
             PaymentStatusLabel.AutoSize = true;
-            PaymentStatusLabel.Location = new Point(615, 278);
+            PaymentStatusLabel.Location = new Point(295, 299);
             PaymentStatusLabel.Margin = new Padding(2, 0, 2, 0);
             PaymentStatusLabel.Name = "PaymentStatusLabel";
             PaymentStatusLabel.Size = new Size(133, 25);
@@ -440,19 +531,19 @@ namespace ADET_sample
             // VenueLabel
             // 
             VenueLabel.AutoSize = true;
-            VenueLabel.Location = new Point(32, 278);
+            VenueLabel.Location = new Point(295, 97);
             VenueLabel.Margin = new Padding(2, 0, 2, 0);
             VenueLabel.Name = "VenueLabel";
-            VenueLabel.Size = new Size(60, 25);
+            VenueLabel.Size = new Size(64, 25);
             VenueLabel.TabIndex = 14;
-            VenueLabel.Text = "Venue";
+            VenueLabel.Text = "Venue:";
             VenueLabel.TextAlign = ContentAlignment.MiddleLeft;
             VenueLabel.Click += VenueLabel_Click;
             // 
             // PackageLabel
             // 
             PackageLabel.AutoSize = true;
-            PackageLabel.Location = new Point(298, 182);
+            PackageLabel.Location = new Point(297, 167);
             PackageLabel.Margin = new Padding(2, 0, 2, 0);
             PackageLabel.Name = "PackageLabel";
             PackageLabel.Size = new Size(76, 25);
@@ -464,7 +555,7 @@ namespace ADET_sample
             // StaffsLabel
             // 
             StaffsLabel.AutoSize = true;
-            StaffsLabel.Location = new Point(615, 93);
+            StaffsLabel.Location = new Point(28, 167);
             StaffsLabel.Margin = new Padding(2, 0, 2, 0);
             StaffsLabel.Name = "StaffsLabel";
             StaffsLabel.Size = new Size(134, 25);
@@ -476,24 +567,25 @@ namespace ADET_sample
             // ContactLabel
             // 
             ContactLabel.AutoSize = true;
-            ContactLabel.Location = new Point(298, 93);
+            ContactLabel.Location = new Point(31, 97);
             ContactLabel.Margin = new Padding(2, 0, 2, 0);
             ContactLabel.Name = "ContactLabel";
-            ContactLabel.Size = new Size(131, 25);
+            ContactLabel.Size = new Size(147, 25);
             ContactLabel.TabIndex = 10;
-            ContactLabel.Text = "Contact Details";
+            ContactLabel.Text = "Contact Number:";
             ContactLabel.TextAlign = ContentAlignment.MiddleLeft;
             ContactLabel.Click += ContactLabel_Click;
             // 
             // DateLabel
             // 
             DateLabel.AutoSize = true;
-            DateLabel.Location = new Point(32, 93);
+            DateLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            DateLabel.Location = new Point(560, 24);
             DateLabel.Margin = new Padding(2, 0, 2, 0);
             DateLabel.Name = "DateLabel";
-            DateLabel.Size = new Size(49, 25);
+            DateLabel.Size = new Size(74, 32);
             DateLabel.TabIndex = 9;
-            DateLabel.Text = "Date";
+            DateLabel.Text = "Date:";
             DateLabel.TextAlign = ContentAlignment.MiddleLeft;
             DateLabel.Click += DateLabel_Click;
             // 
@@ -579,7 +671,7 @@ namespace ADET_sample
             // 
             UnderlinedContact.BackColor = Color.FromArgb(223, 232, 215);
             UnderlinedContact.BorderStyle = BorderStyle.None;
-            UnderlinedContact.Location = new Point(306, 118);
+            UnderlinedContact.Location = new Point(36, 128);
             UnderlinedContact.Margin = new Padding(2, 3, 2, 3);
             UnderlinedContact.Name = "UnderlinedContact";
             UnderlinedContact.ReadOnly = true;
@@ -592,7 +684,7 @@ namespace ADET_sample
             // 
             UnderlinedVenue.BackColor = Color.FromArgb(223, 232, 215);
             UnderlinedVenue.BorderStyle = BorderStyle.None;
-            UnderlinedVenue.Location = new Point(38, 305);
+            UnderlinedVenue.Location = new Point(298, 128);
             UnderlinedVenue.Margin = new Padding(2, 3, 2, 3);
             UnderlinedVenue.Name = "UnderlinedVenue";
             UnderlinedVenue.ReadOnly = true;
@@ -627,43 +719,21 @@ namespace ADET_sample
             UnderlineEventType.TabStop = false;
             UnderlineEventType.Text = "_____________________________";
             // 
-            // PickDateBT
-            // 
-            PickDateBT.BackColor = Color.FromArgb(223, 232, 215);
-            PickDateBT.BackgroundColor = Color.FromArgb(223, 232, 215);
-            PickDateBT.BackgroundImage = (Image)resources.GetObject("PickDateBT.BackgroundImage");
-            PickDateBT.BackgroundImageLayout = ImageLayout.Stretch;
-            PickDateBT.BorderColor = Color.PaleVioletRed;
-            PickDateBT.BorderRadius = 8;
-            PickDateBT.BorderSize = 0;
-            PickDateBT.FlatAppearance.BorderSize = 0;
-            PickDateBT.FlatStyle = FlatStyle.Flat;
-            PickDateBT.ForeColor = Color.Black;
-            PickDateBT.Location = new Point(237, 109);
-            PickDateBT.Margin = new Padding(2, 3, 2, 3);
-            PickDateBT.Name = "PickDateBT";
-            PickDateBT.Size = new Size(32, 33);
-            PickDateBT.TabIndex = 40;
-            PickDateBT.TextColor = Color.Black;
-            PickDateBT.UseVisualStyleBackColor = false;
-            PickDateBT.Visible = false;
-            PickDateBT.Click += PickDateBT_Click;
-            // 
             // UnderlineDate
             // 
             UnderlineDate.BackColor = Color.FromArgb(223, 232, 215);
             UnderlineDate.BorderStyle = BorderStyle.None;
-            UnderlineDate.Location = new Point(38, 118);
+            UnderlineDate.Location = new Point(620, 32);
             UnderlineDate.Margin = new Padding(2, 3, 2, 3);
             UnderlineDate.Name = "UnderlineDate";
-            UnderlineDate.Size = new Size(209, 24);
+            UnderlineDate.Size = new Size(116, 24);
             UnderlineDate.TabIndex = 44;
             UnderlineDate.Text = "_____________________________";
             // 
             // TimedotLabel
             // 
             TimedotLabel.AutoSize = true;
-            TimedotLabel.Location = new Point(97, 213);
+            TimedotLabel.Location = new Point(622, 123);
             TimedotLabel.Margin = new Padding(2, 0, 2, 0);
             TimedotLabel.Name = "TimedotLabel";
             TimedotLabel.Size = new Size(16, 25);
@@ -773,5 +843,10 @@ namespace ADET_sample
         private ComboBox MinCB;
         private ComboBox HourCB;
         private Label TimedotLabel;
+        private TextBox DownPaymentTB;
+        private TextBox UNDownPayment;
+        private Label Down_BalLabel;
+        private ComboBox MODCB;
+        private Label MODlabel;
     }
 }
