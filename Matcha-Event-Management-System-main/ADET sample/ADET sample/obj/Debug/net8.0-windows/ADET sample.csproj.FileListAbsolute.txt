@@ -124,3 +124,5 @@ C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sam
 C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sample\obj\Debug\net8.0-windows\ADET_sample.Finance_tab.resources
 C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sample\obj\Debug\net8.0-windows\ADET_sample.Invoice.resources
 C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sample\obj\Debug\net8.0-windows\ADET_sample.Bill_Info.resources
+C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sample\obj\Debug\net8.0-windows\ADET_sample.Log_In.resources
+C:\Users\Monica\Desktop\Matcha-Event-Management-System-main\ADET sample\ADET sample\obj\Debug\net8.0-windows\ADET_sample.PostReport.resources
