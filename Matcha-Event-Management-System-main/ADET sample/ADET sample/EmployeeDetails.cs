@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Windows.Forms;
 
 namespace ADET_sample
 {
@@ -13,11 +15,12 @@ namespace ADET_sample
         private string initialempFB;
         private string initialempRole;
         private string initialPassword;
+
         public EmployeeDetails(Employees_tab parentForm, string empID, string empName, string empEmail,
             string empNum, string empAdd, string empFB, string empRole, string password)
         {
             InitializeComponent();
-            // Store the initial values of the text boxes and comboboxes para accessible sa lahut
+            // Store the initial values of the text boxes and comboboxes
             this.parentForm = parentForm;
             this.initialempID = empID;
             this.initialempName = empName;
@@ -28,8 +31,8 @@ namespace ADET_sample
             this.initialempRole = empRole;
             this.initialPassword = password;
 
-            //If EmpID is null(means adding a new Employee)
-            if (empID == null && empName == null || empID == "" && empName == "")
+            // If EmpID is null (means adding a new Employee)
+            if (string.IsNullOrEmpty(empID) && string.IsNullOrEmpty(empName))
             {
                 Edit_EmployeeInfo.Text = "Save New Employee";
                 Remove_EmployeeBTN.Text = "Clear";
@@ -51,10 +54,8 @@ namespace ADET_sample
                 EmpIDTB.ReadOnly = false;
                 EmpNumTB.ReadOnly = false;
                 EmpRoleTB.Enabled = true;
-
-
             }
-            else //for displaying and editing employee 
+            else // for displaying and editing employee 
             {
                 UNEmpAdd.Visible = false;
                 UNEmpEmail.Visible = false;
@@ -72,12 +73,20 @@ namespace ADET_sample
                 EmpEmailTB.Text = empEmail;
                 EmpAddTB.Text = empAdd;
                 EmpRoleTB.Text = empRole;
-
-
             }
 
-        }
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                Edit_EmployeeInfo.Enabled = false;
+                Remove_EmployeeBTN.Enabled = false;
+            }
 
+            // Set form properties to stay on top and disable clicking away
+            this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ShowInTaskbar = false;
+        }
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
@@ -85,10 +94,11 @@ namespace ADET_sample
         }
 
         private void Remove_EmployeeBTN_Click(object sender, EventArgs e)
-        {   //Clearing Values sa entering new employee
+        {
+            // Clearing values for entering new employee
             if (Remove_EmployeeBTN.Text == "Clear")
             {
-                //RevertValues
+                // Revert values
                 EmpAddTB.Text = null;
                 EmpEmailTB.Text = null;
                 EmpNameTB.Text = null;
@@ -96,19 +106,17 @@ namespace ADET_sample
                 EmpRoleTB.Text = null;
                 EmpFBTB.Text = null;
             }
-            //Removing Employee
+            // Removing Employee
             else if (Remove_EmployeeBTN.Text == "Remove")
             {
-                if (MessageBox.Show("Do you want to Remove Employee?", "Remove Employee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Do you want to remove this employee?", "Remove Employee", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (MySqlConnection con = DatabaseConnection.GetConnection())
                     {
                         con.Open();
-                        MySqlCommand command = new MySqlCommand("DELETE FROM event_management_system.employee WHERE " +
-                            "employeeID = @ID AND employeeName = @Name", con);
+                        MySqlCommand command = new MySqlCommand("DELETE FROM event_management_system.employee WHERE employeeID = @ID", con);
                         // Set the parameters for the command
                         command.Parameters.AddWithValue("@ID", this.initialempID);
-                        command.Parameters.AddWithValue("@Name", this.initialempName);
 
                         // Execute the command to update the data in the database
                         command.ExecuteNonQuery();
@@ -118,10 +126,6 @@ namespace ADET_sample
                 }
             }
         }
-        private void EmpRoleTB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void Edit_EmployeeInfo_Click(object sender, EventArgs e)
         {
@@ -130,7 +134,6 @@ namespace ADET_sample
             EmpAddTB.ReadOnly = false;
             EmpFBTB.ReadOnly = false;
             EmpEmailTB.ReadOnly = false;
-            //EmpIDTB.ReadOnly = false;
             EmpNumTB.ReadOnly = false;
             EmpRoleTB.Enabled = true;
 
@@ -140,101 +143,111 @@ namespace ADET_sample
             UNEmpName.Visible = true;
             UNEmpNum.Visible = true;
 
-            //Save Changes to existing employee
             if (Edit_EmployeeInfo.Text == "Save")
             {
-                if (MessageBox.Show("Do you want to save changes?", "Save Changes", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (IsFormValid())
                 {
+                    if (MessageBox.Show("Do you want to save changes?", "Save Changes", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string empName = EmpNameTB.Text;
+                        string empEmail = EmpEmailTB.Text;
+                        string empNum = EmpNumTB.Text;
+                        string empAdd = EmpAddTB.Text;
+                        string empFB = EmpFBTB.Text;
+                        string empRole = EmpRoleTB.Text;
 
-                    string empName = EmpNameTB.Text;
-                    string empEmail = EmpEmailTB.Text;
-                    string empNum = EmpNumTB.Text;
-                    string empAdd = EmpAddTB.Text;
-                    string empFB = EmpFBTB.Text;
-                    string empRole = EmpRoleTB.Text;
+                        UpdateEmployeeDataBase(this.initialempID, empName, empEmail, empNum, empAdd, empFB, empRole, this.initialPassword);
 
+                        // Making all text boxes initially display values according to the database's new record
+                        EmpNameTB.ReadOnly = true;
+                        EmpAddTB.ReadOnly = true;
+                        EmpFBTB.ReadOnly = true;
+                        EmpEmailTB.ReadOnly = true;
+                        EmpNumTB.ReadOnly = true;
+                        EmpRoleTB.Enabled = false;
 
-                    UpdatingEmployeeDataBase(this.initialempID, empName, empEmail,
-                    empNum, empAdd, empFB, empRole, this.initialPassword);
+                        // Visibility of underlines
+                        UNEmpAdd.Visible = false;
+                        UNEmpEmail.Visible = false;
+                        UNEmpFBName.Visible = false;
+                        UNEmpName.Visible = false;
+                        UNEmpNum.Visible = false;
 
-
-                    //Making All Text Box initially display values according to Database's new record
-                    // Make the text boxes editable
-                    EmpNameTB.ReadOnly = true;
-                    EmpAddTB.ReadOnly = true;
-                    EmpFBTB.ReadOnly = true;
-                    EmpEmailTB.ReadOnly = true;
-                    EmpNumTB.ReadOnly = true;
-                    EmpRoleTB.Enabled = true;
-
-                    //visibility of underlines
-                    UNEmpAdd.Visible = false;
-                    UNEmpEmail.Visible = false;
-                    UNEmpFBName.Visible = false;
-                    UNEmpName.Visible = false;
-                    UNEmpNum.Visible = false;
+                        Edit_EmployeeInfo.Text = "Edit";
+                    }
+                    else
+                    {
+                        // Revert values
+                        EmpAddTB.Text = this.initialempAdd;
+                        EmpEmailTB.Text = this.initialempEmail;
+                        EmpNameTB.Text = this.initialempName;
+                        EmpNumTB.Text = this.initialempNum;
+                        EmpRoleTB.Text = this.initialempRole;
+                        EmpFBTB.Text = this.initialempFB;
+                    }
                 }
                 else
                 {
-                    //RevertValues
-                    EmpAddTB.Text = this.initialempAdd;
-                    EmpEmailTB.Text = this.initialempEmail;
-                    EmpNameTB.Text = this.initialempName;
-                    EmpNumTB.Text = this.initialempNum;
-                    EmpRoleTB.Text = this.initialempRole;
-                    EmpFBTB.Text = this.initialempFB;
+                    MessageBox.Show("Please fill in all the required fields.", "Missing Values", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            //Saving New employees
             else if (Edit_EmployeeInfo.Text == "Save New Employee")
             {
-                if (MessageBox.Show("Do you want to save New Employee?", "Add Employee ", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (IsFormValid())
                 {
-                    string empID = EmpIDTB.Text;
-                    string empName = EmpNameTB.Text;
-                    string empEmail = EmpEmailTB.Text;
-                    string empNum = EmpNumTB.Text;
-                    string empAdd = EmpAddTB.Text;
-                    string empFB = EmpFBTB.Text;
-                    string empRole = EmpRoleTB.Text;
-                    string password = PasswordTB.Text;
+                    if (MessageBox.Show("Do you want to add this employee?", "Add Employee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string empID = EmpIDTB.Text;
+                        string empName = EmpNameTB.Text;
+                        string empEmail = EmpEmailTB.Text;
+                        string empNum = EmpNumTB.Text;
+                        string empAdd = EmpAddTB.Text;
+                        string empFB = EmpFBTB.Text;
+                        string empRole = EmpRoleTB.Text;
+                        string password = PasswordTB.Text;
 
-                    UpdatingEmployeeDataBase(empID, empName, empEmail,
-                        empNum, empAdd, empFB, empRole, password);
+                        UpdateEmployeeDataBase(empID, empName, empEmail, empNum, empAdd, empFB, empRole, password);
 
-                    //Making All Text Box initially display values according to Database's new record
-                    // Make the text boxes editable
-                    EmpNameTB.ReadOnly = true;
-                    EmpAddTB.ReadOnly = true;
-                    EmpFBTB.ReadOnly = true;
-                    EmpEmailTB.ReadOnly = true;
-                    EmpNumTB.ReadOnly = true;
-                    EmpRoleTB.Enabled = true;
+                        // Making all text boxes initially display values according to the database's new record
+                        EmpNameTB.ReadOnly = true;
+                        EmpAddTB.ReadOnly = true;
+                        EmpFBTB.ReadOnly = true;
+                        EmpEmailTB.ReadOnly = true;
+                        EmpNumTB.ReadOnly = true;
+                        EmpRoleTB.Enabled = false;
 
-                    //visibility of underlines
-                    UNEmpAdd.Visible = false;
-                    UNEmpEmail.Visible = false;
-                    UNEmpFBName.Visible = false;
-                    UNEmpName.Visible = false;
-                    UNEmpNum.Visible = false;
-                    //clear button disabled
-                    Remove_EmployeeBTN.Enabled = false;
+                        // Visibility of underlines
+                        UNEmpAdd.Visible = false;
+                        UNEmpEmail.Visible = false;
+                        UNEmpFBName.Visible = false;
+                        UNEmpName.Visible = false;
+                        UNEmpNum.Visible = false;
+
+                        // Clear button disabled
+                        Remove_EmployeeBTN.Enabled = false;
+
+                        Edit_EmployeeInfo.Text = "Edit";
+                    }
+                    else
+                    {
+                        // Revert values
+                        EmpAddTB.Text = null;
+                        EmpEmailTB.Text = null;
+                        EmpNameTB.Text = null;
+                        EmpNumTB.Text = null;
+                        EmpRoleTB.Text = null;
+                        EmpFBTB.Text = null;
+                    }
                 }
                 else
                 {
-                    //RevertValues
-                    EmpAddTB.Text = null;
-                    EmpEmailTB.Text = null;
-                    EmpNameTB.Text = null;
-                    EmpNumTB.Text = null;
-                    EmpRoleTB.Text = null;
-                    EmpFBTB.Text = null;
+                    MessageBox.Show("Please fill in all the required fields.", "Missing Values", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             Edit_EmployeeInfo.Text = "Save";
         }
-        private void UpdatingEmployeeDataBase(string empID, string empName, string empEmail,
-            string empNum, string empAdd, string empFB, string empRole, string password)
+
+        private void UpdateEmployeeDataBase(string empID, string empName, string empEmail, string empNum, string empAdd, string empFB, string empRole, string password)
         {
             using (MySqlConnection con = DatabaseConnection.GetConnection())
             {
@@ -242,8 +255,7 @@ namespace ADET_sample
                 if (Edit_EmployeeInfo.Text == "Save")
                 {
                     MySqlCommand command = new MySqlCommand("UPDATE event_management_system.employee SET employeeName = @Name, employeeEmail = @Email, " +
-                        "employeeNum = @Number, employeeAddress = @Address, employeeFBName = @FB, role = @Role" +
-                        " WHERE employeeID = @ID AND employeeName = @Name", con);
+                        "employeeNum = @Number, employeeAddress = @Address, employeeFBName = @FB, role = @Role WHERE employeeID = @ID", con);
                     // Set the parameters for the command
                     command.Parameters.AddWithValue("@ID", empID);
                     command.Parameters.AddWithValue("@Name", empName);
@@ -258,9 +270,8 @@ namespace ADET_sample
                 }
                 else if (Edit_EmployeeInfo.Text == "Save New Employee")
                 {
-                    MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.employee(employeeID, employeeName, employeeEmail," +
-                        "employeeNum, employeeAddress, employeeFBName, role, password) " +
-                        "VALUES (@ID, @Name, @Email, @Number, @Address, @FB, @Role, @Pass)", con);
+                    MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.employee(employeeID, employeeName, employeeEmail, " +
+                        "employeeNum, employeeAddress, employeeFBName, role, password) VALUES (@ID, @Name, @Email, @Number, @Address, @FB, @Role, @Pass)", con);
                     // Set the parameters for the command
                     command.Parameters.AddWithValue("@ID", empID);
                     command.Parameters.AddWithValue("@Name", empName);
@@ -270,17 +281,32 @@ namespace ADET_sample
                     command.Parameters.AddWithValue("@FB", empFB);
                     command.Parameters.AddWithValue("@Role", empRole);
                     command.Parameters.AddWithValue("@Pass", password);
-                    //Make add event button unavail pag clicked once
-                    Edit_EmployeeInfo.Enabled = false;
-                    // Execute the command to update the data in the database
+
+                    // Execute the command to insert the data into the database
                     command.ExecuteNonQuery();
 
+                    // Disable the Save button after adding
+                    Edit_EmployeeInfo.Enabled = false;
                 }
+
                 parentForm.RefreshEmployeeList();
             }
+        }
 
+        private bool IsFormValid()
+        {
+            // Check if all required fields are filled
+            return !string.IsNullOrEmpty(EmpIDTB.Text) &&
+                   !string.IsNullOrEmpty(EmpNameTB.Text) &&
+                   !string.IsNullOrEmpty(EmpEmailTB.Text) &&
+                   !string.IsNullOrEmpty(EmpNumTB.Text) &&
+                   !string.IsNullOrEmpty(EmpAddTB.Text) &&
+                   !string.IsNullOrEmpty(EmpFBTB.Text) &&
+                   !string.IsNullOrEmpty(EmpRoleTB.Text) &&
+                   (Edit_EmployeeInfo.Text != "Save New Employee" || !string.IsNullOrEmpty(PasswordTB.Text));
         }
     }
 }
+
 
 

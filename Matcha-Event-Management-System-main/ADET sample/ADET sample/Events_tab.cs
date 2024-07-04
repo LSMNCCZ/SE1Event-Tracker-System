@@ -11,9 +11,17 @@ namespace ADET_sample
             InitializeComponent();
             DateTime today = DateTime.Today;
             FillEventsDataGridView(today);
-        }
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                AddEventButton.Enabled = false;
 
-        private void AddEventButton_Click(object sender, EventArgs e)
+            }
+            else
+            {
+                AddEventButton.Enabled = true;
+            }
+        }
+            private void AddEventButton_Click(object sender, EventArgs e)
         {
             DateTime dateToConvert = this.inititalSelectedDate;
             string eventDate = dateToConvert.ToString("yyyy-MM-dd");

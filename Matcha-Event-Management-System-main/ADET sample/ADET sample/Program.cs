@@ -1,3 +1,4 @@
+using ADET_sample;
 using MySql.Data.MySqlClient;
 
 namespace ADET_sample
@@ -11,7 +12,7 @@ namespace ADET_sample
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Main_Page());
+            Application.Run(new Log_In());
         }
     }
 
@@ -22,5 +23,10 @@ namespace ADET_sample
             string connstring = "server = localhost;uid=root;pwd=SQLKoTo05!;database=event_management_system;"; // Change pwd according to password ng local db niyo sa sql
             return new MySqlConnection(connstring);
         }
+    }
+
+    public static class GlobalVariables
+    {
+        public static string UserRole { get; set; }
     }
 }

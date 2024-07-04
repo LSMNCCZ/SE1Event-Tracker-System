@@ -42,6 +42,7 @@ namespace ADET_sample
             Event_Button = new Button();
             imageList1 = new ImageList(components);
             mainpanel = new Panel();
+            LogOutBTN = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -49,6 +50,7 @@ namespace ADET_sample
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(46, 60, 24);
+            panel1.Controls.Add(LogOutBTN);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(EquipmentTab);
             panel1.Controls.Add(Services_Button);
@@ -198,6 +200,26 @@ namespace ADET_sample
             mainpanel.TabIndex = 10;
             mainpanel.Paint += mainpanel_Paint;
             // 
+            // LogOutBTN
+            // 
+            LogOutBTN.BackColor = Color.Black;
+            LogOutBTN.BackgroundImageLayout = ImageLayout.Zoom;
+            LogOutBTN.FlatAppearance.BorderColor = SystemColors.ButtonHighlight;
+            LogOutBTN.FlatAppearance.BorderSize = 0;
+            LogOutBTN.FlatStyle = FlatStyle.Flat;
+            LogOutBTN.Font = new Font("Tahoma", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            LogOutBTN.ForeColor = Color.White;
+            LogOutBTN.Location = new Point(6, 770);
+            LogOutBTN.Margin = new Padding(2, 3, 2, 3);
+            LogOutBTN.Name = "LogOutBTN";
+            LogOutBTN.Padding = new Padding(20, 0, 0, 0);
+            LogOutBTN.Size = new Size(310, 42);
+            LogOutBTN.TabIndex = 7;
+            LogOutBTN.Text = "Log Out";
+            LogOutBTN.UseVisualStyleBackColor = false;
+            LogOutBTN.UseWaitCursor = true;
+            LogOutBTN.Click += LogOutBTN_Click;
+            // 
             // Main_Page
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -232,5 +254,6 @@ namespace ADET_sample
         private Panel mainpanel;
         private Button EquipmentTab;
         private Button button2;
+        private Button LogOutBTN;
     }
 }

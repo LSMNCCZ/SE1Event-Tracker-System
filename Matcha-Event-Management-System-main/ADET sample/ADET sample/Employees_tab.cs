@@ -11,6 +11,12 @@ namespace ADET_sample
             InitializeComponent();
             FILL_EMP_LIST();
             EmployeeListDataGrid.ReadOnly = true;
+
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                Add_New_Emp_Btn.Enabled = false;
+
+            }
         }
 
         private void Employees_tab_Load(object sender, EventArgs e)

@@ -21,6 +21,10 @@ namespace ADET_sample
             InitializeComponent();
             FillEquipmentsDataGrid();
             EquipmentDataGrid.ReadOnly = true;
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                NewEquipmentBTN.Enabled = false;
+            }
         }
         public void FillEquipmentsDataGrid()
         {

@@ -170,9 +170,11 @@
             PasswordTB.Location = new Point(573, 197);
             PasswordTB.Margin = new Padding(2, 3, 2, 3);
             PasswordTB.Name = "PasswordTB";
+            PasswordTB.PlaceholderText = "Entered by Employee";
             PasswordTB.ReadOnly = true;
             PasswordTB.Size = new Size(219, 32);
             PasswordTB.TabIndex = 71;
+            PasswordTB.UseSystemPasswordChar = true;
             PasswordTB.Visible = false;
             // 
             // PasswordLabel
@@ -200,7 +202,7 @@
             EmpRoleTB.Size = new Size(183, 40);
             EmpRoleTB.Sorted = true;
             EmpRoleTB.TabIndex = 69;
-            EmpRoleTB.SelectedIndexChanged += EmpRoleTB_SelectedIndexChanged;
+            //EmpRoleTB.SelectedIndexChanged += EmpRoleTB_SelectedIndexChanged;
             // 
             // empRoleLabel
             // 
@@ -221,6 +223,7 @@
             EmpFBTB.Location = new Point(121, 72);
             EmpFBTB.Margin = new Padding(2, 3, 2, 3);
             EmpFBTB.Name = "EmpFBTB";
+            EmpFBTB.PlaceholderText = "Facebook Name";
             EmpFBTB.ReadOnly = true;
             EmpFBTB.Size = new Size(326, 32);
             EmpFBTB.TabIndex = 66;
@@ -233,6 +236,7 @@
             EmpAddTB.Location = new Point(14, 235);
             EmpAddTB.Margin = new Padding(2, 3, 2, 3);
             EmpAddTB.Name = "EmpAddTB";
+            EmpAddTB.PlaceholderText = "Address...";
             EmpAddTB.ReadOnly = true;
             EmpAddTB.Size = new Size(778, 32);
             EmpAddTB.TabIndex = 65;
@@ -245,6 +249,7 @@
             EmpEmailTB.Location = new Point(92, 138);
             EmpEmailTB.Margin = new Padding(2, 3, 2, 3);
             EmpEmailTB.Name = "EmpEmailTB";
+            EmpEmailTB.PlaceholderText = "<email>@gmail.com";
             EmpEmailTB.ReadOnly = true;
             EmpEmailTB.Size = new Size(355, 32);
             EmpEmailTB.TabIndex = 64;
@@ -256,7 +261,9 @@
             EmpNumTB.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmpNumTB.Location = new Point(616, 72);
             EmpNumTB.Margin = new Padding(2, 3, 2, 3);
+            EmpNumTB.MaxLength = 11;
             EmpNumTB.Name = "EmpNumTB";
+            EmpNumTB.PlaceholderText = "09XXXXXXXXX";
             EmpNumTB.ReadOnly = true;
             EmpNumTB.Size = new Size(176, 32);
             EmpNumTB.TabIndex = 63;
@@ -268,7 +275,9 @@
             EmpIDTB.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmpIDTB.Location = new Point(630, 9);
             EmpIDTB.Margin = new Padding(2, 3, 2, 3);
+            EmpIDTB.MaxLength = 5;
             EmpIDTB.Name = "EmpIDTB";
+            EmpIDTB.PlaceholderText = "XXXXX";
             EmpIDTB.ReadOnly = true;
             EmpIDTB.Size = new Size(162, 32);
             EmpIDTB.TabIndex = 62;
@@ -281,6 +290,7 @@
             EmpNameTB.Location = new Point(92, 9);
             EmpNameTB.Margin = new Padding(2, 3, 2, 3);
             EmpNameTB.Name = "EmpNameTB";
+            EmpNameTB.PlaceholderText = "Employee Name";
             EmpNameTB.ReadOnly = true;
             EmpNameTB.Size = new Size(355, 32);
             EmpNameTB.TabIndex = 61;

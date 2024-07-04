@@ -82,6 +82,7 @@ namespace ADET_sample
             TimedotLabel = new Label();
             EventInfoLabel = new Label();
             ExitButton = new ADETADET_sample.RBButton();
+            peReportBTN = new ADETADET_sample.RBButton();
             panel3.SuspendLayout();
             SuspendLayout();
             // 
@@ -151,7 +152,6 @@ namespace ADET_sample
             panel3.Name = "panel3";
             panel3.Size = new Size(810, 545);
             panel3.TabIndex = 5;
-            panel3.Paint += panel3_Paint;
             // 
             // MODCB
             // 
@@ -289,6 +289,7 @@ namespace ADET_sample
             EquipmentsTB.Margin = new Padding(2, 3, 2, 3);
             EquipmentsTB.Multiline = true;
             EquipmentsTB.Name = "EquipmentsTB";
+            EquipmentsTB.PlaceholderText = "List of needed equipments...";
             EquipmentsTB.Size = new Size(305, 79);
             EquipmentsTB.TabIndex = 51;
             // 
@@ -311,9 +312,9 @@ namespace ADET_sample
             EventTypeTB.Location = new Point(298, 18);
             EventTypeTB.Margin = new Padding(2, 3, 2, 3);
             EventTypeTB.Name = "EventTypeTB";
+            EventTypeTB.PlaceholderText = "Event Type -";
             EventTypeTB.Size = new Size(229, 32);
             EventTypeTB.TabIndex = 42;
-            EventTypeTB.Text = "Event Type -";
             // 
             // EventNameTB
             // 
@@ -323,9 +324,9 @@ namespace ADET_sample
             EventNameTB.Location = new Point(36, 18);
             EventNameTB.Margin = new Padding(2, 3, 2, 3);
             EventNameTB.Name = "EventNameTB";
+            EventNameTB.PlaceholderText = "Event Name -";
             EventNameTB.Size = new Size(229, 32);
             EventNameTB.TabIndex = 41;
-            EventNameTB.Text = "Event Name -";
             // 
             // PackageDB
             // 
@@ -338,7 +339,6 @@ namespace ADET_sample
             PackageDB.Size = new Size(140, 33);
             PackageDB.Sorted = true;
             PackageDB.TabIndex = 38;
-            PackageDB.SelectedIndexChanged += PackageDB_SelectedIndexChanged;
             // 
             // Staff4DB
             // 
@@ -352,7 +352,6 @@ namespace ADET_sample
             Staff4DB.Size = new Size(140, 33);
             Staff4DB.Sorted = true;
             Staff4DB.TabIndex = 37;
-            Staff4DB.SelectedIndexChanged += Staff4DB_SelectedIndexChanged;
             // 
             // Staff3DB
             // 
@@ -366,7 +365,6 @@ namespace ADET_sample
             Staff3DB.Size = new Size(140, 33);
             Staff3DB.Sorted = true;
             Staff3DB.TabIndex = 36;
-            Staff3DB.SelectedIndexChanged += Staff3DB_SelectedIndexChanged;
             // 
             // Staff2DB
             // 
@@ -380,7 +378,6 @@ namespace ADET_sample
             Staff2DB.Size = new Size(140, 33);
             Staff2DB.Sorted = true;
             Staff2DB.TabIndex = 35;
-            Staff2DB.SelectedIndexChanged += Staff2DB_SelectedIndexChanged;
             // 
             // Staff1DB
             // 
@@ -394,7 +391,6 @@ namespace ADET_sample
             Staff1DB.Size = new Size(140, 33);
             Staff1DB.Sorted = true;
             Staff1DB.TabIndex = 34;
-            Staff1DB.SelectedIndexChanged += Staff1DB_SelectedIndexChanged;
             // 
             // AddOnsDB
             // 
@@ -408,7 +404,6 @@ namespace ADET_sample
             AddOnsDB.Size = new Size(140, 33);
             AddOnsDB.Sorted = true;
             AddOnsDB.TabIndex = 33;
-            AddOnsDB.SelectedIndexChanged += AddOnsDB_SelectedIndexChanged;
             // 
             // PaymentStatusDB
             // 
@@ -422,7 +417,6 @@ namespace ADET_sample
             PaymentStatusDB.Size = new Size(140, 33);
             PaymentStatusDB.Sorted = true;
             PaymentStatusDB.TabIndex = 32;
-            PaymentStatusDB.SelectedIndexChanged += PaymentStatusDB_SelectedIndexChanged;
             // 
             // AddOnsLabel
             // 
@@ -434,7 +428,6 @@ namespace ADET_sample
             AddOnsLabel.TabIndex = 31;
             AddOnsLabel.Text = "Add Ons";
             AddOnsLabel.TextAlign = ContentAlignment.MiddleLeft;
-            AddOnsLabel.Click += AddOnsLabel_Click;
             // 
             // RequestTB
             // 
@@ -444,9 +437,9 @@ namespace ADET_sample
             RequestTB.Margin = new Padding(2, 3, 2, 3);
             RequestTB.Multiline = true;
             RequestTB.Name = "RequestTB";
+            RequestTB.PlaceholderText = "Client requests...";
             RequestTB.Size = new Size(393, 79);
             RequestTB.TabIndex = 0;
-            RequestTB.TextChanged += RequestTB_TextChanged;
             // 
             // VenueTB
             // 
@@ -455,9 +448,9 @@ namespace ADET_sample
             VenueTB.Location = new Point(298, 124);
             VenueTB.Margin = new Padding(2, 3, 2, 3);
             VenueTB.Name = "VenueTB";
+            VenueTB.PlaceholderText = "Place of Event..";
             VenueTB.Size = new Size(194, 24);
             VenueTB.TabIndex = 28;
-            VenueTB.TextChanged += VenueTB_TextChanged;
             // 
             // ContactTB
             // 
@@ -465,10 +458,11 @@ namespace ADET_sample
             ContactTB.BorderStyle = BorderStyle.None;
             ContactTB.Location = new Point(36, 124);
             ContactTB.Margin = new Padding(2, 3, 2, 3);
+            ContactTB.MaxLength = 11;
             ContactTB.Name = "ContactTB";
+            ContactTB.PlaceholderText = "09XXXXXXXXX";
             ContactTB.Size = new Size(194, 24);
             ContactTB.TabIndex = 21;
-            ContactTB.TextChanged += ContactTB_TextChanged;
             // 
             // DateTB
             // 
@@ -477,9 +471,9 @@ namespace ADET_sample
             DateTB.Location = new Point(635, 30);
             DateTB.Margin = new Padding(2, 3, 2, 3);
             DateTB.Name = "DateTB";
+            DateTB.PlaceholderText = "YYYY-MM-DD";
             DateTB.Size = new Size(101, 24);
             DateTB.TabIndex = 20;
-            DateTB.TextChanged += DateTB_TextChanged;
             // 
             // ClientTB
             // 
@@ -488,9 +482,9 @@ namespace ADET_sample
             ClientTB.Location = new Point(89, 55);
             ClientTB.Margin = new Padding(2, 3, 2, 3);
             ClientTB.Name = "ClientTB";
+            ClientTB.PlaceholderText = "Client Name...";
             ClientTB.Size = new Size(229, 24);
             ClientTB.TabIndex = 19;
-            ClientTB.TextChanged += ClientTB_TextChanged;
             // 
             // TimeLabel
             // 
@@ -502,7 +496,6 @@ namespace ADET_sample
             TimeLabel.TabIndex = 18;
             TimeLabel.Text = "Time";
             TimeLabel.TextAlign = ContentAlignment.MiddleLeft;
-            TimeLabel.Click += TimeLabel_Click_1;
             // 
             // RequestLabel
             // 
@@ -514,7 +507,6 @@ namespace ADET_sample
             RequestLabel.TabIndex = 17;
             RequestLabel.Text = "Specified Requests";
             RequestLabel.TextAlign = ContentAlignment.MiddleLeft;
-            RequestLabel.Click += RequestLabel_Click;
             // 
             // PaymentStatusLabel
             // 
@@ -526,7 +518,6 @@ namespace ADET_sample
             PaymentStatusLabel.TabIndex = 16;
             PaymentStatusLabel.Text = "Payment Status";
             PaymentStatusLabel.TextAlign = ContentAlignment.MiddleLeft;
-            PaymentStatusLabel.Click += PaymentStatusLabel_Click;
             // 
             // VenueLabel
             // 
@@ -538,7 +529,6 @@ namespace ADET_sample
             VenueLabel.TabIndex = 14;
             VenueLabel.Text = "Venue:";
             VenueLabel.TextAlign = ContentAlignment.MiddleLeft;
-            VenueLabel.Click += VenueLabel_Click;
             // 
             // PackageLabel
             // 
@@ -550,7 +540,6 @@ namespace ADET_sample
             PackageLabel.TabIndex = 13;
             PackageLabel.Text = "Package";
             PackageLabel.TextAlign = ContentAlignment.MiddleLeft;
-            PackageLabel.Click += PackageLabel_Click;
             // 
             // StaffsLabel
             // 
@@ -562,7 +551,6 @@ namespace ADET_sample
             StaffsLabel.TabIndex = 11;
             StaffsLabel.Text = "Staffs Assigned";
             StaffsLabel.TextAlign = ContentAlignment.MiddleLeft;
-            StaffsLabel.Click += StaffsLabel_Click;
             // 
             // ContactLabel
             // 
@@ -574,7 +562,6 @@ namespace ADET_sample
             ContactLabel.TabIndex = 10;
             ContactLabel.Text = "Contact Number:";
             ContactLabel.TextAlign = ContentAlignment.MiddleLeft;
-            ContactLabel.Click += ContactLabel_Click;
             // 
             // DateLabel
             // 
@@ -587,7 +574,6 @@ namespace ADET_sample
             DateLabel.TabIndex = 9;
             DateLabel.Text = "Date:";
             DateLabel.TextAlign = ContentAlignment.MiddleLeft;
-            DateLabel.Click += DateLabel_Click;
             // 
             // ClientLabel
             // 
@@ -599,7 +585,6 @@ namespace ADET_sample
             ClientLabel.TabIndex = 8;
             ClientLabel.Text = "Client:";
             ClientLabel.TextAlign = ContentAlignment.MiddleLeft;
-            ClientLabel.Click += ClientLabel_Click;
             // 
             // EventNameLabel
             // 
@@ -611,7 +596,6 @@ namespace ADET_sample
             EventNameLabel.Size = new Size(0, 32);
             EventNameLabel.TabIndex = 7;
             EventNameLabel.TextAlign = ContentAlignment.MiddleLeft;
-            EventNameLabel.Click += EventNameLabel_Click;
             // 
             // Delete_EventInfo
             // 
@@ -752,7 +736,6 @@ namespace ADET_sample
             EventInfoLabel.Size = new Size(291, 45);
             EventInfoLabel.TabIndex = 8;
             EventInfoLabel.Text = "Event Information";
-            EventInfoLabel.Click += EventInfoLabel_Click;
             // 
             // ExitButton
             // 
@@ -774,12 +757,32 @@ namespace ADET_sample
             ExitButton.UseVisualStyleBackColor = false;
             ExitButton.Click += ExitButton_Click;
             // 
+            // peReportBTN
+            // 
+            peReportBTN.BackColor = Color.FromArgb(46, 60, 24);
+            peReportBTN.BackgroundColor = Color.FromArgb(46, 60, 24);
+            peReportBTN.BorderColor = Color.PaleVioletRed;
+            peReportBTN.BorderRadius = 8;
+            peReportBTN.BorderSize = 0;
+            peReportBTN.FlatAppearance.BorderSize = 0;
+            peReportBTN.FlatStyle = FlatStyle.Flat;
+            peReportBTN.ForeColor = Color.White;
+            peReportBTN.Location = new Point(638, 9);
+            peReportBTN.Margin = new Padding(2, 3, 2, 3);
+            peReportBTN.Name = "peReportBTN";
+            peReportBTN.Size = new Size(176, 39);
+            peReportBTN.TabIndex = 63;
+            peReportBTN.Text = "Post-Event Report";
+            peReportBTN.TextColor = Color.White;
+            peReportBTN.UseVisualStyleBackColor = false;
+            // 
             // Events_Info
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 215);
             ClientSize = new Size(829, 650);
+            Controls.Add(peReportBTN);
             Controls.Add(EventInfoLabel);
             Controls.Add(ExitButton);
             Controls.Add(panel3);
@@ -848,5 +851,7 @@ namespace ADET_sample
         private Label Down_BalLabel;
         private ComboBox MODCB;
         private Label MODlabel;
+        private ADETADET_sample.RBButton rbButton1;
+        private ADETADET_sample.RBButton peReportBTN;
     }
 }

@@ -79,6 +79,11 @@ namespace ADET_sample
                 InclusionTB.ReadOnly = true;
 
             }
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                EditPackageBTN.Enabled = false;
+                RemovePackageBTN.Enabled = false;
+            }
         }
 
         private void EditPackageBTN_Click(object sender, EventArgs e)

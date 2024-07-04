@@ -31,6 +31,9 @@
     <Compile Update="Invoice.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Log_In.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Main_Page.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -38,6 +41,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Packages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PostReport.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Services_tab.cs">

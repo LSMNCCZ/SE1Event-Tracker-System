@@ -5,24 +5,37 @@ namespace ADET_sample
     public partial class NewAddOn : Form
     {
         private Services_tab parentForm;
+
         public NewAddOn(Services_tab servTab, string AOID, string AODesc, string AOPrice)
         {
             InitializeComponent();
             this.parentForm = servTab;
+
             // Make the text boxes editable
             AddOnIDTB.ReadOnly = false;
             AddOnDescTB.ReadOnly = false;
             AddOnPriceTB.ReadOnly = false;
 
-            //visibility of underlines
+            // Visibility of underlines
             UNID.Visible = true;
             UNPrice.Visible = true;
             UNID.Visible = true;
+
+            // Set form properties to stay on top and disable clicking away
+            this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void SaveAddOnBTN_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to save New Employee?", "Add Employee ", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (string.IsNullOrEmpty(AddOnIDTB.Text) || string.IsNullOrEmpty(AddOnDescTB.Text) || string.IsNullOrEmpty(AddOnPriceTB.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "Missing Information", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (MessageBox.Show("Do you want to save this add-on?", "Save Add-On", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string ID = AddOnIDTB.Text;
                 string Desc = AddOnDescTB.Text;
@@ -30,42 +43,24 @@ namespace ADET_sample
 
                 UpdateAddOnDataBase(ID, Desc, Price);
 
-                //Making All Text Box initially display values according to Database's new record
-                // Make the text boxes editable
+                // Making All Text Box initially display values according to Database's new record
                 AddOnIDTB.ReadOnly = true;
                 AddOnDescTB.ReadOnly = true;
                 AddOnPriceTB.ReadOnly = true;
 
-                //visibility of underlines
+                // Visibility of underlines
                 UNID.Visible = false;
                 UNPrice.Visible = false;
                 UNID.Visible = false;
                 AddOnDescTB.BorderStyle = BorderStyle.None;
 
-                //clear button disabled
+                // Clear button disabled
                 ClearBTN.Enabled = false;
-            }
-            else
-            {
-                //Making All Text Box initially display values according to Database's new record
-                // Make the text boxes editable
-                AddOnIDTB.ReadOnly = false;
-                AddOnDescTB.ReadOnly = false;
-                AddOnPriceTB.ReadOnly = false;
-
-                //visibility of underlines
-                UNID.Visible = true;
-                UNPrice.Visible = true;
-                UNID.Visible = true;
-
-                //clear button disabled
-                ClearBTN.Enabled = true;
             }
         }
 
         private void ClearBTN_Click(object sender, EventArgs e)
         {
-            //revert
             AddOnIDTB.Text = "XXXXX";
             AddOnDescTB.Text = null;
             AddOnPriceTB.Text = "00";
@@ -79,12 +74,10 @@ namespace ADET_sample
                 MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.addon" +
                     "(addOnID, description, addOnPrice)" +
                         "VALUES (@aoID, @aoDesc, @aoPrice)", con);
-                // Set the parameters for the command
                 command.Parameters.AddWithValue("@aoID", ID);
                 command.Parameters.AddWithValue("@aoDesc", Desc);
                 command.Parameters.AddWithValue("@aoPrice", Price);
 
-                // Execute the command to update the data in the database
                 command.ExecuteNonQuery();
 
                 ClearBTN.Enabled = false;
@@ -100,3 +93,4 @@ namespace ADET_sample
         }
     }
 }
+

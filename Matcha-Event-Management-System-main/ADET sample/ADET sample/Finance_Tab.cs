@@ -24,7 +24,7 @@ namespace ADET_sample
             DateTime today = DateTime.Today;
             string month = today.Month.ToString("D2");
             string year = Convert.ToString(today.Year);
-            UpdateFinanceRep("06", "2024", today);
+            UpdateFinanceRep(month, year, today);
             FillFinanceRepDataGrid(today);
             FillPayOutDataGrid(today);
             FillBillsDataGridView(today);
@@ -35,6 +35,13 @@ namespace ADET_sample
 
             BillsDataGridView.CellValueChanged += BillsDataGridView_CellValueChanged;
             BillsDataGridView.CurrentCellDirtyStateChanged += BillsDataGridView_CurrentCellDirtyStateChanged;
+
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                AddBillerBTN.Enabled = false;
+                PayOutDataGrid.ReadOnly = true;
+                BillsDataGridView.ReadOnly = true;
+            }
         }
 
         public void FillPayOutDataGrid(DateTime today)
@@ -205,8 +212,12 @@ namespace ADET_sample
 
                 DataTable financeTable = new DataTable();
                 financeGrid.Fill(financeTable);
-
                 FinanceRepDataGrid.DataSource = financeTable;
+                FinanceRepDataGrid.Columns["financeRepID"].HeaderText = "Report ID";
+                FinanceRepDataGrid.Columns["month"].HeaderText = "Day of Report";
+                FinanceRepDataGrid.Columns["totalPayouts"].HeaderText = "Payouts";
+                FinanceRepDataGrid.Columns["totalBill"].HeaderText = "Total Bill";
+                FinanceRepDataGrid.Columns["totalMonthlyIncome"].HeaderText = "Income";
             }
         }
         private void BillsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

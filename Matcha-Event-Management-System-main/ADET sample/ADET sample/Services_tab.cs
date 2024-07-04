@@ -9,6 +9,11 @@ namespace ADET_sample
         public Services_tab()
         {
             InitializeComponent();
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                AddPackageBTN.Enabled = false;
+                AddOnsBTN.Enabled = false;
+            }
         }
 
         private void Services_tab_Load(object sender, EventArgs e)
@@ -53,7 +58,7 @@ namespace ADET_sample
                     Addons_List_DataGrid.Columns["description"].HeaderText = "Description";
                     Addons_List_DataGrid.Columns["addOnPrice"].HeaderText = "Price";
 
-                    if (repeat == 1)
+                    if (repeat == 1 && GlobalVariables.UserRole == "Admin")
                     {
                         // Add an image column for deletion
                         DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
@@ -128,12 +133,8 @@ namespace ADET_sample
                 DataGridViewRow selectedRow = Addons_List_DataGrid.Rows[e.RowIndex];
                 string addOnID = selectedRow.Cells["addOnID"].Value.ToString();
 
-                // Confirm deletion
-                if (MessageBox.Show("Are you sure you want to delete this Add-On?", "Delete Add-On", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    DeleteAddOnFromDatabase(addOnID);
-                    FillServiceTab();
-                }
+                DeleteAddOnFromDatabase(addOnID);
+                FillServiceTab();
             }
         }
         private void DeleteAddOnFromDatabase(string addOnID)

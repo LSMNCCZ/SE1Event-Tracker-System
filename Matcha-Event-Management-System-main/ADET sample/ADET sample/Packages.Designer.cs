@@ -95,10 +95,10 @@
             ServPriceTB.Location = new Point(390, 70);
             ServPriceTB.Margin = new Padding(2, 3, 2, 3);
             ServPriceTB.Name = "ServPriceTB";
+            ServPriceTB.PlaceholderText = "00";
             ServPriceTB.ReadOnly = true;
             ServPriceTB.Size = new Size(69, 32);
             ServPriceTB.TabIndex = 73;
-            ServPriceTB.Text = "00";
             // 
             // InclusionLabel
             // 
@@ -119,10 +119,10 @@
             ServEmPayTB.Location = new Point(212, 123);
             ServEmPayTB.Margin = new Padding(2, 3, 2, 3);
             ServEmPayTB.Name = "ServEmPayTB";
+            ServEmPayTB.PlaceholderText = "00";
             ServEmPayTB.ReadOnly = true;
             ServEmPayTB.Size = new Size(90, 32);
             ServEmPayTB.TabIndex = 77;
-            ServEmPayTB.Text = "00";
             // 
             // label1
             // 
@@ -186,20 +186,22 @@
             ServIDTB.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             ServIDTB.Location = new Point(144, 70);
             ServIDTB.Margin = new Padding(2, 3, 2, 3);
+            ServIDTB.MaxLength = 5;
             ServIDTB.Name = "ServIDTB";
+            ServIDTB.PlaceholderText = "XXXXX";
             ServIDTB.ReadOnly = true;
             ServIDTB.Size = new Size(102, 32);
             ServIDTB.TabIndex = 70;
-            ServIDTB.Text = "XXXXX";
             // 
             // InclusionTB
             // 
             InclusionTB.BackColor = Color.FromArgb(223, 232, 215);
-            InclusionTB.BorderStyle = BorderStyle.None;
+            InclusionTB.BorderStyle = BorderStyle.FixedSingle;
             InclusionTB.Location = new Point(21, 212);
             InclusionTB.Margin = new Padding(2, 3, 2, 3);
             InclusionTB.Multiline = true;
             InclusionTB.Name = "InclusionTB";
+            InclusionTB.PlaceholderText = "Package Inclusion...";
             InclusionTB.Size = new Size(443, 90);
             InclusionTB.TabIndex = 69;
             // 
@@ -211,10 +213,10 @@
             ServiceNameTB.Location = new Point(21, 13);
             ServiceNameTB.Margin = new Padding(2, 3, 2, 3);
             ServiceNameTB.Name = "ServiceNameTB";
+            ServiceNameTB.PlaceholderText = "Package Name -";
             ServiceNameTB.ReadOnly = true;
             ServiceNameTB.Size = new Size(443, 32);
             ServiceNameTB.TabIndex = 68;
-            ServiceNameTB.Text = "Package Name -";
             // 
             // EditPackageBTN
             // 

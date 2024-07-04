@@ -127,10 +127,10 @@
             equipNameTB.Margin = new Padding(2, 3, 2, 3);
             equipNameTB.MaxLength = 50;
             equipNameTB.Name = "equipNameTB";
+            equipNameTB.PlaceholderText = "--";
             equipNameTB.ReadOnly = true;
             equipNameTB.Size = new Size(212, 32);
             equipNameTB.TabIndex = 81;
-            equipNameTB.Text = "--";
             // 
             // UNName
             // 
@@ -223,10 +223,10 @@
             EquipIDTB.Margin = new Padding(2, 3, 2, 3);
             EquipIDTB.MaxLength = 5;
             EquipIDTB.Name = "EquipIDTB";
+            EquipIDTB.PlaceholderText = "XXXXX";
             EquipIDTB.ReadOnly = true;
             EquipIDTB.Size = new Size(94, 32);
             EquipIDTB.TabIndex = 68;
-            EquipIDTB.Text = "XXXXX";
             // 
             // ClearBTN
             // 
@@ -302,7 +302,8 @@
             Controls.Add(EquipmentPanel);
             Controls.Add(EquipmentDetail);
             Name = "AddEquipment";
-            Text = "New Equipment";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Studio Equipment";
             EquipmentPanel.ResumeLayout(false);
             EquipmentPanel.PerformLayout();
             ResumeLayout(false);

@@ -107,10 +107,10 @@
             BillBudgetTB.Margin = new Padding(2, 3, 2, 3);
             BillBudgetTB.MaxLength = 50;
             BillBudgetTB.Name = "BillBudgetTB";
+            BillBudgetTB.PlaceholderText = "00";
             BillBudgetTB.ReadOnly = true;
             BillBudgetTB.Size = new Size(134, 32);
             BillBudgetTB.TabIndex = 91;
-            BillBudgetTB.Text = "00";
             // 
             // PesoSign
             // 
@@ -156,10 +156,10 @@
             BillTypeTB.Margin = new Padding(2, 3, 2, 3);
             BillTypeTB.MaxLength = 50;
             BillTypeTB.Name = "BillTypeTB";
+            BillTypeTB.PlaceholderText = "--";
             BillTypeTB.ReadOnly = true;
             BillTypeTB.Size = new Size(212, 32);
             BillTypeTB.TabIndex = 88;
-            BillTypeTB.Text = "--";
             // 
             // UNBillType
             // 
@@ -183,10 +183,10 @@
             BillDueDateTB.Margin = new Padding(2, 3, 2, 3);
             BillDueDateTB.MaxLength = 10;
             BillDueDateTB.Name = "BillDueDateTB";
+            BillDueDateTB.PlaceholderText = "YYYY-MM-DD";
             BillDueDateTB.ReadOnly = true;
             BillDueDateTB.Size = new Size(163, 32);
             BillDueDateTB.TabIndex = 85;
-            BillDueDateTB.Text = "YYYY-MM-DD";
             // 
             // UNdDate
             // 
@@ -210,10 +210,10 @@
             BillerNameTB.Margin = new Padding(2, 3, 2, 3);
             BillerNameTB.MaxLength = 50;
             BillerNameTB.Name = "BillerNameTB";
+            BillerNameTB.PlaceholderText = "--";
             BillerNameTB.ReadOnly = true;
             BillerNameTB.Size = new Size(212, 32);
             BillerNameTB.TabIndex = 81;
-            BillerNameTB.Text = "--";
             // 
             // UNBiller
             // 
@@ -270,10 +270,10 @@
             BillIDTB.Margin = new Padding(2, 3, 2, 3);
             BillIDTB.MaxLength = 6;
             BillIDTB.Name = "BillIDTB";
+            BillIDTB.PlaceholderText = "XXXXXX";
             BillIDTB.ReadOnly = true;
             BillIDTB.Size = new Size(94, 32);
             BillIDTB.TabIndex = 68;
-            BillIDTB.Text = "XXXXXX";
             // 
             // DeleteBTN
             // 
@@ -360,6 +360,7 @@
             Controls.Add(EquipmentPanel);
             Controls.Add(EquipmentDetail);
             Name = "Bill_Info";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Bill Information";
             EquipmentPanel.ResumeLayout(false);
             EquipmentPanel.PerformLayout();

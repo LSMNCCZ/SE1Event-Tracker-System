@@ -83,6 +83,7 @@
             AddOnDescTB.Margin = new Padding(2, 3, 2, 3);
             AddOnDescTB.Multiline = true;
             AddOnDescTB.Name = "AddOnDescTB";
+            AddOnDescTB.PlaceholderText = "Description...";
             AddOnDescTB.Size = new Size(457, 79);
             AddOnDescTB.TabIndex = 77;
             // 
@@ -105,10 +106,10 @@
             AddOnPriceTB.Location = new Point(369, 7);
             AddOnPriceTB.Margin = new Padding(2, 3, 2, 3);
             AddOnPriceTB.Name = "AddOnPriceTB";
+            AddOnPriceTB.PlaceholderText = "00";
             AddOnPriceTB.ReadOnly = true;
             AddOnPriceTB.Size = new Size(96, 32);
             AddOnPriceTB.TabIndex = 71;
-            AddOnPriceTB.Text = "00";
             // 
             // label1
             // 
@@ -141,10 +142,10 @@
             AddOnIDTB.Margin = new Padding(2, 3, 2, 3);
             AddOnIDTB.MaxLength = 5;
             AddOnIDTB.Name = "AddOnIDTB";
+            AddOnIDTB.PlaceholderText = "XXXXX";
             AddOnIDTB.ReadOnly = true;
             AddOnIDTB.Size = new Size(94, 32);
             AddOnIDTB.TabIndex = 68;
-            AddOnIDTB.Text = "XXXXX";
             // 
             // ClearBTN
             // 

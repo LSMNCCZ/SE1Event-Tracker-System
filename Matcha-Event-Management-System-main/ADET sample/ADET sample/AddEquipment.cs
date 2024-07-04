@@ -1,18 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ADET_sample
 {
-
-
     public partial class AddEquipment : Form
     {
         private Equipments_tab eTab;
@@ -32,13 +23,11 @@ namespace ADET_sample
             this.equipID = equipID;
             this.equipName = equipName;
 
-
-            //display initial values
+            // Display initial values
             if (equipID != null)
             {
                 SaveEquipBTN.Text = "Edit";
                 ClearBTN.Text = "Remove";
-
 
                 EquipIDTB.Text = equipID;
                 equipNameTB.Text = equipName;
@@ -57,27 +46,47 @@ namespace ADET_sample
                 EquipIDTB.ReadOnly = false;
                 equipNameTB.ReadOnly = false;
             }
+
+            if (GlobalVariables.UserRole != "Admin")
+            {
+                SaveEquipBTN.Enabled = false;
+                ClearBTN.Enabled = false;
+            }
+
+            // Set form properties to stay on top and disable clicking away
+            this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ShowInTaskbar = false;
         }
 
         private void SaveEquipBTN_Click(object sender, EventArgs e)
         {
-            if (SaveEquipBTN.Text == "Save")
+            if (IsFormValid())
             {
-                string eID = EquipIDTB.Text;
-                string eName = equipNameTB.Text;
-                string eType = equipTypeCB.Text;
-                string eStat = equipStatusCB.Text;
-                string eCon = equipConCB.Text;
+                if (SaveEquipBTN.Text == "Save")
+                {
+                   
+                    string eID = EquipIDTB.Text;
+                    string eName = equipNameTB.Text;
+                    string eType = equipTypeCB.Text;
+                    string eStat = equipStatusCB.Text;
+                    string eCon = equipConCB.Text;
 
-                UpdateEquipmentDataBase(eID, eName, eType, eStat, eCon);
+                    UpdateEquipmentDataBase(eID, eName, eType, eStat, eCon);
+                }
+                else if (SaveEquipBTN.Text == "Edit") // Admin edit condition of equipment
+                {
+                    equipConCB.Enabled = true;
+                    SaveEquipBTN.Text = "Save";
+                }
             }
-            else if (SaveEquipBTN.Text == "Edit")//admin edit condition ng equipment
+            else
             {
-                equipConCB.Enabled = true;
-                SaveEquipBTN.Text = "Save";
+                MessageBox.Show("Please fill in all the required fields.", "Missing Values", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
+
         private void UpdateEquipmentDataBase(string eID, string eName, string eType,
                 string eStat, string eCon)
         {
@@ -96,12 +105,17 @@ namespace ADET_sample
                     command.Parameters.AddWithValue("@Stat", eStat);
                     command.Parameters.AddWithValue("@Con", eCon);
 
-                    //Make add event button unavail pag clicked once
-                    ClearBTN.Enabled = false;
-                    SaveEquipBTN.Enabled = false;
+                    if (MessageBox.Show("Do you want to insert this equipment?", "Insert Equipment", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        // Execute the command to update the data in the database
+                        command.ExecuteNonQuery();
 
-                    // Execute the command to update the data in the database
-                    command.ExecuteNonQuery();
+                        // Make buttons unavailable after action
+                        ClearBTN.Enabled = false;
+                        SaveEquipBTN.Enabled = false;
+
+                        MessageBox.Show("Equipment inserted successfully.");
+                    }
                 }
                 else
                 {
@@ -110,12 +124,17 @@ namespace ADET_sample
                     command.Parameters.AddWithValue("@ID", eID);
                     command.Parameters.AddWithValue("@Stat", eStat);
 
-                    //Make add event button unavail pag clicked once
-                    ClearBTN.Enabled = false;
-                    SaveEquipBTN.Enabled = false;
+                    if (MessageBox.Show("Do you want to update this equipment?", "Update Equipment", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        // Execute the command to update the data in the database
+                        command.ExecuteNonQuery();
 
-                    // Execute the command to update the data in the database
-                    command.ExecuteNonQuery();
+                        // Make buttons unavailable after action
+                        ClearBTN.Enabled = false;
+                        SaveEquipBTN.Enabled = false;
+
+                        MessageBox.Show("Equipment updated successfully.");
+                    }
                 }
             }
             eTab.FillEquipmentsDataGrid();
@@ -123,10 +142,9 @@ namespace ADET_sample
 
         private void ClearBTN_Click(object sender, EventArgs e)
         {
-
             if (ClearBTN.Text == "Remove")
             {
-                if (MessageBox.Show("Do you want to Remove Equipment?", "Remove Equipment", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Do you want to remove this equipment?", "Remove Equipment", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     string eID = EquipIDTB.Text;
                     using (MySqlConnection conn = DatabaseConnection.GetConnection())
@@ -139,6 +157,7 @@ namespace ADET_sample
                             command.ExecuteNonQuery();
                             eTab.FillEquipmentsDataGrid();
 
+                            MessageBox.Show("Equipment removed successfully.");
                             this.Close();
                         }
                         catch (Exception ex)
@@ -149,9 +168,9 @@ namespace ADET_sample
                         {
                             conn.Close();
                         }
-
                     }
-                }            }
+                }
+            }
             else
             {
                 EquipIDTB.Text = "XXXXX";
@@ -162,10 +181,21 @@ namespace ADET_sample
             }
         }
 
+        private bool IsFormValid()
+        {
+            // Check if all required fields are filled
+            return !string.IsNullOrEmpty(EquipIDTB.Text) &&
+                   !string.IsNullOrEmpty(equipNameTB.Text) &&
+                   !string.IsNullOrEmpty(equipTypeCB.Text) &&
+                   !string.IsNullOrEmpty(equipStatusCB.Text) &&
+                   !string.IsNullOrEmpty(equipConCB.Text);
+        }
+
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
     }
 }
+
 

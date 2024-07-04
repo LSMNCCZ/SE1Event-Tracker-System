@@ -71,5 +71,12 @@ namespace ADET_sample
         {
             loadform(new Finance_tab());
         }
+
+        private void LogOutBTN_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+            Application.Restart();
+
+        }
     }
 }
