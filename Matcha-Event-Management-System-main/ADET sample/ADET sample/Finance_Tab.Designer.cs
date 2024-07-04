@@ -28,68 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridView FiananceRepDataGrid;
+            
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridView PayOutDataGrid;
+           
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridView dataGridView2;
+            
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             FinanceRepLabel = new Label();
             PayoutLabel = new Label();
             Bills = new Label();
-            FiananceRepDataGrid = new DataGridView();
+            AddBillerBTN = new ADETADET_sample.RBButton();
+            FinanceRepDataGrid = new DataGridView();
             PayOutDataGrid = new DataGridView();
-            dataGridView2 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)FiananceRepDataGrid).BeginInit();
+            BillsDataGridView = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)FinanceRepDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PayOutDataGrid).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BillsDataGridView).BeginInit();
             SuspendLayout();
-            // 
-            // FiananceRepDataGrid
-            // 
-            FiananceRepDataGrid.AllowUserToAddRows = false;
-            FiananceRepDataGrid.AllowUserToDeleteRows = false;
-            FiananceRepDataGrid.AllowUserToResizeColumns = false;
-            FiananceRepDataGrid.AllowUserToResizeRows = false;
-            FiananceRepDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            FiananceRepDataGrid.BackgroundColor = Color.FromArgb(76, 88, 57);
-            FiananceRepDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            FiananceRepDataGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(46, 60, 24);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 13F);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(46, 60, 24);
-            dataGridViewCellStyle1.SelectionForeColor = Color.White;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            FiananceRepDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            FiananceRepDataGrid.ColumnHeadersHeight = 60;
-            FiananceRepDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(76, 88, 57);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(95, 122, 86);
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            FiananceRepDataGrid.DefaultCellStyle = dataGridViewCellStyle2;
-            FiananceRepDataGrid.EnableHeadersVisualStyles = false;
-            FiananceRepDataGrid.GridColor = SystemColors.InactiveBorder;
-            FiananceRepDataGrid.Location = new Point(4, 61);
-            FiananceRepDataGrid.MultiSelect = false;
-            FiananceRepDataGrid.Name = "FiananceRepDataGrid";
-            FiananceRepDataGrid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            FiananceRepDataGrid.RowHeadersVisible = false;
-            FiananceRepDataGrid.RowHeadersWidth = 62;
-            FiananceRepDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            FiananceRepDataGrid.RowTemplate.Height = 50;
-            FiananceRepDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            FiananceRepDataGrid.ShowEditingIcon = false;
-            FiananceRepDataGrid.Size = new Size(1210, 355);
-            FiananceRepDataGrid.TabIndex = 12;
             // 
             // FinanceRepLabel
             // 
@@ -98,9 +56,9 @@
             FinanceRepLabel.Location = new Point(-1, 9);
             FinanceRepLabel.Margin = new Padding(4, 0, 4, 0);
             FinanceRepLabel.Name = "FinanceRepLabel";
-            FinanceRepLabel.Size = new Size(447, 43);
+            FinanceRepLabel.Size = new Size(470, 43);
             FinanceRepLabel.TabIndex = 11;
-            FinanceRepLabel.Text = "Montly Finance Reports";
+            FinanceRepLabel.Text = "Monthly Finance Reports";
             // 
             // PayoutLabel
             // 
@@ -109,9 +67,85 @@
             PayoutLabel.Location = new Point(-1, 433);
             PayoutLabel.Margin = new Padding(4, 0, 4, 0);
             PayoutLabel.Name = "PayoutLabel";
-            PayoutLabel.Size = new Size(146, 43);
+            PayoutLabel.Size = new Size(301, 43);
             PayoutLabel.TabIndex = 13;
-            PayoutLabel.Text = "Payout";
+            PayoutLabel.Text = "Month's Payout";
+            // 
+            // Bills
+            // 
+            Bills.AutoSize = true;
+            Bills.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Bills.Location = new Point(609, 433);
+            Bills.Margin = new Padding(4, 0, 4, 0);
+            Bills.Name = "Bills";
+            Bills.Size = new Size(231, 43);
+            Bills.TabIndex = 15;
+            Bills.Text = "Montly Bills";
+            // 
+            // AddBillerBTN
+            // 
+            AddBillerBTN.BackColor = Color.FromArgb(46, 60, 24);
+            AddBillerBTN.BackgroundColor = Color.FromArgb(46, 60, 24);
+            AddBillerBTN.BorderColor = Color.PaleVioletRed;
+            AddBillerBTN.BorderRadius = 8;
+            AddBillerBTN.BorderSize = 0;
+            AddBillerBTN.FlatAppearance.BorderSize = 0;
+            AddBillerBTN.FlatStyle = FlatStyle.Flat;
+            AddBillerBTN.ForeColor = Color.White;
+            AddBillerBTN.ImageAlign = ContentAlignment.BottomCenter;
+            AddBillerBTN.Location = new Point(609, 757);
+            AddBillerBTN.Margin = new Padding(2, 3, 2, 3);
+            AddBillerBTN.Name = "AddBillerBTN";
+            AddBillerBTN.Size = new Size(605, 39);
+            AddBillerBTN.TabIndex = 17;
+            AddBillerBTN.Text = "New Biller";
+            AddBillerBTN.TextColor = Color.White;
+            AddBillerBTN.UseVisualStyleBackColor = false;
+            AddBillerBTN.Click += AddBillerBTN_Click;
+            // 
+            // FinanceRepDataGrid
+            // 
+            FinanceRepDataGrid.AllowUserToAddRows = false;
+            FinanceRepDataGrid.AllowUserToDeleteRows = false;
+            FinanceRepDataGrid.AllowUserToResizeColumns = false;
+            FinanceRepDataGrid.AllowUserToResizeRows = false;
+            FinanceRepDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            FinanceRepDataGrid.BackgroundColor = Color.FromArgb(76, 88, 57);
+            FinanceRepDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            FinanceRepDataGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(46, 60, 24);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 13F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(46, 60, 24);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            FinanceRepDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            FinanceRepDataGrid.ColumnHeadersHeight = 60;
+            FinanceRepDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(76, 88, 57);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(95, 122, 86);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            FinanceRepDataGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            FinanceRepDataGrid.EnableHeadersVisualStyles = false;
+            FinanceRepDataGrid.GridColor = SystemColors.InactiveBorder;
+            FinanceRepDataGrid.Location = new Point(4, 61);
+            FinanceRepDataGrid.MultiSelect = false;
+            FinanceRepDataGrid.Name = "FinanceRepDataGrid";
+            FinanceRepDataGrid.ReadOnly = true;
+            FinanceRepDataGrid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            FinanceRepDataGrid.RowHeadersVisible = false;
+            FinanceRepDataGrid.RowHeadersWidth = 62;
+            FinanceRepDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            FinanceRepDataGrid.RowTemplate.Height = 50;
+            FinanceRepDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            FinanceRepDataGrid.ShowEditingIcon = false;
+            FinanceRepDataGrid.Size = new Size(1210, 355);
+            FinanceRepDataGrid.TabIndex = 12;
             // 
             // PayOutDataGrid
             // 
@@ -156,16 +190,16 @@
             PayOutDataGrid.Size = new Size(600, 312);
             PayOutDataGrid.TabIndex = 14;
             // 
-            // dataGridView2
+            // BillsDataGridView
             // 
-            dataGridView2.AllowUserToAddRows = false;
-            dataGridView2.AllowUserToDeleteRows = false;
-            dataGridView2.AllowUserToResizeColumns = false;
-            dataGridView2.AllowUserToResizeRows = false;
-            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView2.BackgroundColor = Color.FromArgb(76, 88, 57);
-            dataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridView2.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            BillsDataGridView.AllowUserToAddRows = false;
+            BillsDataGridView.AllowUserToDeleteRows = false;
+            BillsDataGridView.AllowUserToResizeColumns = false;
+            BillsDataGridView.AllowUserToResizeRows = false;
+            BillsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            BillsDataGridView.BackgroundColor = Color.FromArgb(76, 88, 57);
+            BillsDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            BillsDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = Color.FromArgb(46, 60, 24);
             dataGridViewCellStyle5.Font = new Font("Segoe UI", 13F);
@@ -173,9 +207,9 @@
             dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(46, 60, 24);
             dataGridViewCellStyle5.SelectionForeColor = Color.White;
             dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridView2.ColumnHeadersHeight = 60;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            BillsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            BillsDataGridView.ColumnHeadersHeight = 60;
+            BillsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = Color.FromArgb(76, 88, 57);
             dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F);
@@ -183,32 +217,22 @@
             dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(95, 122, 86);
             dataGridViewCellStyle6.SelectionForeColor = Color.White;
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dataGridView2.DefaultCellStyle = dataGridViewCellStyle6;
-            dataGridView2.EnableHeadersVisualStyles = false;
-            dataGridView2.GridColor = SystemColors.InactiveBorder;
-            dataGridView2.Location = new Point(614, 484);
-            dataGridView2.MultiSelect = false;
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridView2.RowHeadersVisible = false;
-            dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridView2.RowTemplate.Height = 50;
-            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.ShowEditingIcon = false;
-            dataGridView2.Size = new Size(600, 312);
-            dataGridView2.TabIndex = 16;
-            // 
-            // Bills
-            // 
-            Bills.AutoSize = true;
-            Bills.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Bills.Location = new Point(609, 433);
-            Bills.Margin = new Padding(4, 0, 4, 0);
-            Bills.Name = "Bills";
-            Bills.Size = new Size(96, 43);
-            Bills.TabIndex = 15;
-            Bills.Text = "Bills";
+            BillsDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
+            BillsDataGridView.EnableHeadersVisualStyles = false;
+            BillsDataGridView.GridColor = SystemColors.InactiveBorder;
+            BillsDataGridView.Location = new Point(614, 484);
+            BillsDataGridView.MultiSelect = false;
+            BillsDataGridView.Name = "BillsDataGridView";
+            BillsDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            BillsDataGridView.RowHeadersVisible = false;
+            BillsDataGridView.RowHeadersWidth = 62;
+            BillsDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            BillsDataGridView.RowTemplate.Height = 50;
+            BillsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            BillsDataGridView.ShowEditingIcon = false;
+            BillsDataGridView.Size = new Size(600, 267);
+            BillsDataGridView.TabIndex = 16;
+            BillsDataGridView.CellContentClick += BillsDataGridView_CellContentClick;
             // 
             // Finance_tab
             // 
@@ -216,18 +240,19 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 215);
             ClientSize = new Size(1226, 808);
-            Controls.Add(dataGridView2);
+            Controls.Add(AddBillerBTN);
+            Controls.Add(BillsDataGridView);
             Controls.Add(Bills);
             Controls.Add(PayOutDataGrid);
             Controls.Add(PayoutLabel);
-            Controls.Add(FiananceRepDataGrid);
+            Controls.Add(FinanceRepDataGrid);
             Controls.Add(FinanceRepLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Finance_tab";
             Text = "Finance";
-            ((System.ComponentModel.ISupportInitialize)FiananceRepDataGrid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)FinanceRepDataGrid).EndInit();
             ((System.ComponentModel.ISupportInitialize)PayOutDataGrid).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BillsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -237,5 +262,10 @@
         private Label FinanceRepLabel;
         private Label PayoutLabel;
         private Label Bills;
+        private ADETADET_sample.RBButton AddBillerBTN;
+        private DataGridView PayOutDataGrid;
+        private DataGridView FinanceRepDataGrid;
+        private DataGridView BillsDataGridView;
+
     }
 }

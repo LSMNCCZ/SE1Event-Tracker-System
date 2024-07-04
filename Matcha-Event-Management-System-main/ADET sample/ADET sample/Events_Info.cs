@@ -2,9 +2,11 @@
 using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Asn1.Ocsp;
+using Org.BouncyCastle.Ocsp;
 using System.Globalization;
 using System.IO.Packaging;
 using System.Reflection;
+using System.Security.Cryptography;
 
 namespace ADET_sample
 {
@@ -41,6 +43,7 @@ namespace ADET_sample
         private string balance;
         private Dictionary<string, int> packagePrices;
         private Dictionary<string, int> addOnPrices;
+        private Dictionary<string, int> empPay;
 
         public Events_Info(Events_tab eventsTab, string eventName, string eventType, string venue, string time, string clientName,
             string eventDate, string package, string addOns, string paymentStatus, string staff1, string staff2,
@@ -71,6 +74,7 @@ namespace ADET_sample
 
             this.packagePrices = new Dictionary<string, int>();
             this.addOnPrices = new Dictionary<string, int>();
+            this.empPay = new Dictionary<string, int>();
 
 
             //convert 24hours time format into 12
@@ -171,6 +175,18 @@ namespace ADET_sample
                         string AOID= addOnReader.GetString("addOnID");
                         int AOPrice = addOnReader.GetInt32("addOnPrice");
                         this.addOnPrices.Add(AOID, AOPrice);
+                    }
+                }
+
+                //getting employee pay per package
+                MySqlCommand payCommand = new MySqlCommand("SELECT packageType, employeeRate FROM event_management_system.package", con);
+                using (MySqlDataReader payReader = payCommand.ExecuteReader())
+                {
+                    while (payReader.Read())
+                    {
+                        string pType = payReader.GetString("packageType");
+                        int empPay = payReader.GetInt32("employeeRate");
+                        this.empPay.Add(pType, empPay);
                     }
                 }
             }
@@ -693,6 +709,7 @@ namespace ADET_sample
                     string staff3 = (Staff3DB.SelectedItem == null || Staff3DB.SelectedItem == "" || Staff3DB.SelectedItem == "None") ? "" : Staff3DB.SelectedItem.ToString();
                     string staff4 = (Staff4DB.SelectedItem == null || Staff4DB.SelectedItem == "" || Staff4DB.SelectedItem == "None") ? "" : Staff4DB.SelectedItem.ToString();
 
+
                     string addOns = (AddOnsDB.SelectedItem == null || AddOnsDB.SelectedItem == "" || AddOnsDB.SelectedItem == "None") ? "" : AddOnsDB.SelectedItem.ToString();
                     string equipments = EquipmentsTB.Text;
 
@@ -723,7 +740,10 @@ namespace ADET_sample
                     //add addonprice and packageprice for totalAmount
                     int inttotalAmount = 0;
                     inttotalAmount = inttotalAmount + this.packagePrices[package];
-                    inttotalAmount = inttotalAmount + this.addOnPrices[addOns];
+                    if (addOns != "")
+                    {
+                        inttotalAmount = inttotalAmount + this.addOnPrices[addOns];
+                    }
 
                     string downpayment = DownPaymentTB.Text;
                     int dp = Convert.ToInt32(downpayment);
@@ -742,15 +762,120 @@ namespace ADET_sample
                         pbalance = Convert.ToString(intbalance);
                     }
 
-
-
-
-
-
                     UpdatingEventDataBase(eventName, eventType, venue, time, clientName, eventDate,
                             package, addOns, paymentStatus, staff1, staff2, staff3, staff4, contact, request, equipments, eID, pID);
 
                     UpdateInvoice(eID, pID, paymentStatus, totalAmount, pbalance, downpayment, paymentType);//may prob payment type eneqweyz
+
+
+
+                    if (staff1 != "")
+                    {
+                        using (MySqlConnection con = DatabaseConnection.GetConnection())
+                        {
+                            con.Open();
+                            MySqlCommand empCommand = new MySqlCommand("SELECT employeeID FROM event_management_system.employee WHERE employeeName = @empName", con);
+                            empCommand.Parameters.AddWithValue("@empName", staff1);
+                            using (MySqlDataReader empReader = empCommand.ExecuteReader())
+                            {
+                                string empID1 = null;
+                                while (empReader.Read())
+                                {
+                                    empID1 = empReader.GetString("employeeID");
+                                }
+
+                                if (empID1 != null)
+                                {
+                                    int pAmount = this.empPay[package];
+                                    UpdatePayout(empID1, eID, package, eventDate, pAmount); // amount is dependent on package type
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    if (staff2 != "")
+                    {
+                        using (MySqlConnection con = DatabaseConnection.GetConnection())
+                        {
+                            con.Open();
+                            MySqlCommand empCommand = new MySqlCommand("SELECT employeeID FROM event_management_system.employee WHERE employeeName = @empName", con);
+                            empCommand.Parameters.AddWithValue("@empName", staff2);
+                            using (MySqlDataReader empReader = empCommand.ExecuteReader())
+                            {
+                                string empID2 = null;
+                                while (empReader.Read())
+                                {
+                                    empID2 = empReader.GetString("employeeID");
+                                }
+
+                                if (empID2 != null)
+                                {
+                                    int pAmount = this.empPay[package];
+                                    UpdatePayout(empID2, eID, package, eventDate, pAmount); // amount is dependent on package type
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    if (staff3 != "")
+                    {
+                        using (MySqlConnection con = DatabaseConnection.GetConnection())
+                        {
+                            con.Open();
+                            MySqlCommand empCommand = new MySqlCommand("SELECT employeeID FROM event_management_system.employee WHERE employeeName = @empName", con);
+                            empCommand.Parameters.AddWithValue("@empName", staff3);
+                            using (MySqlDataReader empReader = empCommand.ExecuteReader())
+                            {
+                                string empID3 = null;
+                                while (empReader.Read())
+                                {
+                                    empID3 = empReader.GetString("employeeID");
+                                }
+
+                                if (empID3 != null)
+                                {
+                                    int pAmount = this.empPay[package];
+                                    UpdatePayout(empID3, eID, package, eventDate, pAmount); // amount is dependent on package type
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    if (staff4 != "")
+                    {
+                        using (MySqlConnection con = DatabaseConnection.GetConnection())
+                        {
+                            con.Open();
+                            MySqlCommand empCommand = new MySqlCommand("SELECT employeeID FROM event_management_system.employee WHERE employeeName = @empName", con);
+                            empCommand.Parameters.AddWithValue("@empName", staff4);
+                            using (MySqlDataReader empReader = empCommand.ExecuteReader())
+                            {
+                                string empID4 = null;
+                                while (empReader.Read())
+                                {
+                                    empID4 = empReader.GetString("employeeID");
+                                }
+
+                                if (empID4 != null)
+                                {
+                                    int pAmount = this.empPay[package];
+                                    UpdatePayout(empID4, eID, package, eventDate, pAmount); // amount is dependent on package type
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    
+
+                    
 
 
                     Invoice Invoice = new Invoice(eID, pID);
@@ -882,14 +1007,26 @@ namespace ADET_sample
                         MySqlCommand command = new MySqlCommand("DELETE FROM event_management_system.event WHERE " +
                             "eventName = @EventName AND eventDate = @EventDate", con);
 
-                        string deleteEventName = this.initialEventName;
-                        DateTime deleteDate = DateTime.ParseExact(this.initialEventDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                         // Set the parameters for the command
-                        command.Parameters.AddWithValue("@EventName", deleteEventName);
-                        command.Parameters.AddWithValue("@EventDate", deleteDate);
+                        command.Parameters.AddWithValue("@EventName", this.initialEventName);
+                        command.Parameters.AddWithValue("@EventDate", this.initialEventDate);
+                        command.ExecuteNonQuery();
+
+
+                        MySqlCommand command2 = new MySqlCommand("DELETE FROM event_management_system.invoice WHERE " +
+                            "eventID = @eID AND paymentID = @pID", con);
+                        command2.Parameters.AddWithValue("@eID", this.eventID);
+                        command2.Parameters.AddWithValue("@pID", this.payID);
 
                         // Execute the command to update the data in the database
-                        command.ExecuteNonQuery();
+                        command2.ExecuteNonQuery();
+                        
+
+                        MySqlCommand command3 = new MySqlCommand("DELETE FROM event_management_system.payout WHERE " +
+                            "eventID = @eID", con);
+                        command3.Parameters.AddWithValue("@eID", this.eventID);
+
+                        command3.ExecuteNonQuery();
                         RefreshDataGridView();
                         this.Close();
                     }
@@ -1091,7 +1228,7 @@ namespace ADET_sample
                     Edit_EventInfo.Enabled = false;
                     Delete_EventInfo.Enabled = false;
                 }
-                else if (Edit_EventInfo.Text == "Add Event")
+                else if (Edit_EventInfo.Text == "Add Event")//new event itechi
                 {
                     MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.event(eventID, paymentID, eventName, eventType, eventVenue, " +
                         "eventTime, clientName, eventDate, packageType, addOn, paymentStatus, staff1, staff2, " +
@@ -1180,7 +1317,29 @@ namespace ADET_sample
                 }
             }
         }
-            public void RefreshDataGridView()
+
+
+        //payout per event
+        private void UpdatePayout(string empID, string eventID, string packageType, string pMonth, int pAmount)
+        {
+            using (MySqlConnection con = DatabaseConnection.GetConnection())
+            {
+                con.Open();
+                MySqlCommand command = new MySqlCommand("INSERT INTO event_management_system.payout(employeeID, eventID," +
+                       "packageType, payoutMonth, payoutAmount, payoutStatus) VALUES (@empID, @eventID, @pType, " +
+                       "@pMonth, @pAmount, @pStatus)", con);
+                command.Parameters.AddWithValue("@empID", empID);
+                command.Parameters.AddWithValue("@eventID", eventID);
+                command.Parameters.AddWithValue("@pType", packageType);
+                command.Parameters.AddWithValue("@pMonth", pMonth);
+                command.Parameters.AddWithValue("@pAmount", pAmount);
+
+                string pStatus = "Pending";
+                command.Parameters.AddWithValue("@pStatus", pStatus);
+                command.ExecuteNonQuery();
+            }
+        }
+        public void RefreshDataGridView()
         {
             DateTime selectedDate = DateTime.ParseExact(this.initialEventDate, "yyyy-MM-dd", CultureInfo.InvariantCulture); ;
             eventsTab.FillEventsDataGridView(selectedDate);
